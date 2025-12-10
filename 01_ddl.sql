@@ -1,7 +1,8 @@
-﻿    -- =====================================================
--- BASE DE DADOS: CASINO ONLINE (SQL)
+﻿-- =====================================================
+-- BASE DE DADOS: CASINO ONLINE (SQL) - VERSÃO FINAL SINGLE PLAYER
 -- =====================================================
 
+-- Tabela Jogador (Mantém-se igual)
 CREATE TABLE Jogador (
     id              INT IDENTITY(1,1) PRIMARY KEY,
     nome            NVARCHAR(100) NOT NULL,
@@ -16,6 +17,7 @@ CREATE TABLE Jogador (
 GO
 
 -- =====================================================
+-- Tabela RegistoLogin (Mantém-se igual)
 CREATE TABLE RegistoLogin (
     id              INT IDENTITY(1,1) PRIMARY KEY,
     jogador_id      INT NOT NULL,
@@ -29,6 +31,7 @@ CREATE TABLE RegistoLogin (
 GO
 
 -- =====================================================
+-- Tabela Transacao (Mantém-se igual)
 CREATE TABLE Transacao (
     id              INT IDENTITY(1,1) PRIMARY KEY,
     jogador_id      INT NOT NULL,
@@ -43,6 +46,7 @@ CREATE TABLE Transacao (
 GO
 
 -- =====================================================
+-- Tabela HistoricoPagamento (Mantém-se igual)
 CREATE TABLE HistoricoPagamento (
     transacao_id    INT NOT NULL,
     numRegisto      INT NOT NULL,
@@ -58,6 +62,7 @@ CREATE TABLE HistoricoPagamento (
 GO
 
 -- =====================================================
+-- Tabela Jogo (Mantém-se igual)
 CREATE TABLE Jogo (
     id              INT IDENTITY(1,1) PRIMARY KEY,
     nome            NVARCHAR(50) NOT NULL,
@@ -66,6 +71,7 @@ CREATE TABLE Jogo (
 GO
 
 -- =====================================================
+-- Tabela Dealer (Mantém-se igual)
 CREATE TABLE Dealer (
     id              INT IDENTITY(1,1) PRIMARY KEY,
     nome            NVARCHAR(100) NOT NULL
@@ -73,6 +79,7 @@ CREATE TABLE Dealer (
 GO
 
 -- =====================================================
+-- Tabela Mesa (Mantém-se igual)
 CREATE TABLE Mesa (
     id              INT IDENTITY(1,1) PRIMARY KEY,
     jogo_id         INT NOT NULL,
@@ -88,18 +95,27 @@ CREATE TABLE Mesa (
 GO
 
 -- =====================================================
+-- Tabela SessaoDeJogo (ALTERADA)
+-- Recebeu o jogador_id e numPartidas.
+-- Perdeu a relação N:M com a tabela Joga (que foi eliminada).
+-- =====================================================
 CREATE TABLE SessaoDeJogo (
     id              INT IDENTITY(1,1) PRIMARY KEY,
     mesa_id         INT NOT NULL,
+    jogador_id      INT NOT NULL,     -- NOVO: Ligação direta ao Jogador (1:N)
+    numPartidas     INT DEFAULT 0,    -- NOVO: Veio da antiga tabela Joga
     dataInicio      DATETIME DEFAULT GETDATE(),
     dataFim         DATETIME,
 
     FOREIGN KEY (mesa_id) REFERENCES Mesa(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (jogador_id) REFERENCES Jogador(id) -- FK para Jogador
         ON DELETE CASCADE
 );
 GO
 
 -- =====================================================
+-- Tabela Aposta (Mantém-se igual, liga à Sessão)
 CREATE TABLE Aposta (
     id              INT IDENTITY(1,1) PRIMARY KEY,
     sessaoJogo_id   INT NOT NULL,
@@ -108,21 +124,6 @@ CREATE TABLE Aposta (
     lucro           DECIMAL(10,2),
     dataAposta      DATETIME DEFAULT GETDATE(),
 
-    FOREIGN KEY (sessaoJogo_id) REFERENCES SessaoDeJogo(id)
-        ON DELETE CASCADE
-);
-GO
-
--- =====================================================
-CREATE TABLE Joga (
-    jogador_id          INT NOT NULL,
-    sessaoJogo_id       INT NOT NULL,
-    dataPrimeiraSessao  DATE,
-    numPartidas         INT DEFAULT 0,
-
-    PRIMARY KEY (jogador_id, sessaoJogo_id),
-    FOREIGN KEY (jogador_id) REFERENCES Jogador(id)
-        ON DELETE CASCADE,
     FOREIGN KEY (sessaoJogo_id) REFERENCES SessaoDeJogo(id)
         ON DELETE CASCADE
 );
