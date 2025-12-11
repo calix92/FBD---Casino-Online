@@ -202,3 +202,45 @@ def levantar_saldo(jogador_id, valor):
     except Exception as e:
         print(f"Erro Levantamento: {e}")
         return False
+
+def obter_transacoes_pessoais(jogador_id):
+    """Devolve o histórico de depósitos e levantamentos do jogador"""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        # Vamos buscar o tipo, valor e data. Ordenamos da mais recente para a mais antiga.
+        sql = """
+              SELECT tipoDeTransacao, valor, data 
+              FROM Transacao 
+              WHERE jogador_id = ? 
+              ORDER BY data DESC
+              """
+        cursor.execute(sql, (jogador_id,))
+        rows = cursor.fetchall()
+        conn.close()
+        return rows
+    except Exception as e:
+        print(f"Erro ao obter transações: {e}")
+        return []
+
+
+def admin_obter_todas_transacoes():
+    """ADMIN: Lista todas as transações (depósitos e levantamentos) de todos os jogadores"""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        # Vamos buscar o ID da transação, ID do jogador, Email, Tipo, Valor e Data
+        sql = """
+              SELECT t.id, j.id AS jogador_id, j.email, t.tipoDeTransacao, t.valor, t.data
+              FROM Transacao t
+                       JOIN Jogador j ON t.jogador_id = j.id
+              ORDER BY t.data DESC \
+              """
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        conn.close()
+        return rows
+    except Exception as e:
+        print(f"Erro Admin Transacoes: {e}")
+        return []

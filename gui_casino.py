@@ -330,29 +330,53 @@ class CasinoApp(ctk.CTk):
         try:
             val = float(self.entry_aposta_bf.get())
         except:
+            messagebox.showerror("Erro", "Valor de aposta inválido!")
             return
-        if val > self.jogador['saldo'] or val <= 0: return
 
+        if val > self.jogador['saldo'] or val <= 0:
+            messagebox.showerror("Erro", "Saldo insuficiente ou valor inválido!")
+            return
+
+        # Lógica dos dados
         while True:
-            d = [random.randint(1, 6) for _ in range(3)];
+            d = [random.randint(1, 6) for _ in range(3)]
             s = sum(d)
             if s == 3:
-                res = "Ases"; break
+                res = "Ases";
+                break
             elif s in [14, 15, 16]:
-                res = "Grande"; break
+                res = "Grande";
+                break
             elif s in [5, 6, 7]:
-                res = "Pequeno"; break
+                res = "Pequeno";
+                break
 
+        # Atualizar visual dos dados
         dice_chars = ["", "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"]
         for i, l in enumerate(self.dice_labels): l.configure(text=dice_chars[d[i]])
 
-        ganhou = (tipo == res);
+        # Calcular prémio
+        ganhou = (tipo == res)
+        # Se for Ases paga 60:1, senão paga 1:1
         luc = val * 60 if ganhou and res == "Ases" else (val if ganhou else -val)
+
         txt_bd = "Vitoria" if ganhou else "Derrota"
-        self.lbl_resultado.configure(text=f"SAIU {res.upper()} ({s})!", text_color=("#00FF00" if ganhou else "red"))
+
+        # Atualizar Label de texto na mesa
+        cor_texto = "#00FF00" if ganhou else "red"
+        self.lbl_resultado.configure(text=f"SAIU {res.upper()} ({s})!", text_color=cor_texto)
+
+        # Registar na BD e mostrar Popup (AQUI ESTAVA A FALTA)
         if db_manager.registar_aposta(self.sessao_id, val, txt_bd, luc):
-            self.jogador['saldo'] += luc;
+            self.jogador['saldo'] += luc
             self.update_saldo_lbl()
+
+            # --- MENSAGEM DE SISTEMA ADICIONADA ---
+            msg_titulo = "Vitória!" if ganhou else "Derrota"
+            msg_corpo = f"{'Ganhaste' if ganhou else 'Perdeste'} {abs(luc):.2f}€.\nNovo Saldo: {self.jogador['saldo']:.2f}€"
+            messagebox.showinfo(msg_titulo, msg_corpo)
+        else:
+            messagebox.showerror("Erro", "Erro ao comunicar com a Base de Dados")
 
     # ================= 5. TELAS NOVAS: HISTÓRICO E ADMIN =================
 
@@ -360,74 +384,152 @@ class CasinoApp(ctk.CTk):
         self.clean_screen()
         bg = self.setup_background()
 
-        frame = ctk.CTkFrame(bg, fg_color="#2b2b2b", width=800, height=600)
+        # Frame principal
+        frame = ctk.CTkFrame(bg, fg_color="#2b2b2b", width=900, height=700)
         frame.place(relx=0.5, rely=0.5, anchor="center")
-        ctk.CTkLabel(frame, text="📜 Meu Histórico (Últimas 10)", font=("Arial", 20, "bold")).pack(pady=20)
 
-        scroll = ctk.CTkScrollableFrame(frame, width=700, height=400)
-        scroll.pack(pady=10)
+        ctk.CTkLabel(frame, text="📜 O Meu Histórico", font=("Arial", 24, "bold")).pack(pady=20)
 
-        historico = db_manager.obter_historico_pessoal(self.jogador['id'])
-        ctk.CTkLabel(scroll, text=f"{'JOGO':<15} | {'APOSTA':<10} | {'RES':<10} | {'LUCRO':<10} | {'DATA'}",
-                     font=("Consolas", 14, "bold"), anchor="w").pack(fill="x", padx=10)
-        ctk.CTkLabel(scroll, text="-" * 80).pack()
+        # --- CRIAÇÃO DAS ABAS ---
+        tabview = ctk.CTkTabview(frame, width=800, height=500)
+        tabview.pack(pady=10)
+        tabview.add("Jogos")  # Aba 1: Apostas
+        tabview.add("Transações")  # Aba 2: Depósitos e Levantamentos
 
-        for row in historico:
+        # ================= ABA 1: HISTÓRICO DE JOGOS =================
+        scroll_jogos = ctk.CTkScrollableFrame(tabview.tab("Jogos"), width=750, height=400)
+        scroll_jogos.pack(fill="both", expand=True)
+
+        historico_jogos = db_manager.obter_historico_pessoal(self.jogador['id'])
+
+        # Cabeçalho Jogos
+        header_jogos = f"{'JOGO':<15} | {'APOSTA':<10} | {'RES':<10} | {'LUCRO':<10} | {'DATA'}"
+        ctk.CTkLabel(scroll_jogos, text=header_jogos, font=("Consolas", 14, "bold"), anchor="w").pack(fill="x", padx=10)
+        ctk.CTkLabel(scroll_jogos, text="-" * 90).pack()
+
+        if not historico_jogos:
+            ctk.CTkLabel(scroll_jogos, text="Sem registo de jogos.", text_color="gray").pack(pady=20)
+
+        for row in historico_jogos:
             data_fmt = row.dataAposta.strftime('%Y-%m-%d %H:%M')
             txt = f"{row.nome:<15} | {row.valor:>8.2f}€ | {row.resultado:<10} | {row.lucro:>+8.2f}€ | {data_fmt}"
-            col = "#00FF00" if row.lucro > 0 else ("red" if row.lucro < 0 else "white")
-            ctk.CTkLabel(scroll, text=txt, font=("Consolas", 12), text_color=col, anchor="w").pack(fill="x", padx=10)
 
-        ctk.CTkButton(frame, text="Voltar", command=self.show_main_menu).pack(pady=20)
+            # Cor: Verde (lucro), Vermelho (prejuízo), Branco (neutro)
+            col = "#00FF00" if row.lucro > 0 else ("red" if row.lucro < 0 else "white")
+
+            ctk.CTkLabel(scroll_jogos, text=txt, font=("Consolas", 12), text_color=col, anchor="w").pack(fill="x",
+                                                                                                         padx=10)
+
+        # ================= ABA 2: HISTÓRICO DE TRANSAÇÕES =================
+        scroll_trans = ctk.CTkScrollableFrame(tabview.tab("Transações"), width=750, height=400)
+        scroll_trans.pack(fill="both", expand=True)
+
+        historico_trans = db_manager.obter_transacoes_pessoais(self.jogador['id'])
+
+        # Cabeçalho Transações
+        header_trans = f"{'TIPO':<20} | {'VALOR':<15} | {'DATA'}"
+        ctk.CTkLabel(scroll_trans, text=header_trans, font=("Consolas", 14, "bold"), anchor="w").pack(fill="x", padx=10)
+        ctk.CTkLabel(scroll_trans, text="-" * 90).pack()
+
+        if not historico_trans:
+            ctk.CTkLabel(scroll_trans, text="Sem registo de transações.", text_color="gray").pack(pady=20)
+
+        for t in historico_trans:
+            data_fmt = t.data.strftime('%Y-%m-%d %H:%M')
+            txt = f"{t.tipoDeTransacao:<20} | {t.valor:>13.2f}€ | {data_fmt}"
+
+            # Cor: Verde para depósitos, Laranja/Vermelho para levantamentos
+            if "Deposito" in t.tipoDeTransacao:
+                col = "#4CAF50"  # Verde
+                sinal = "+"
+            else:
+                col = "#FF9800"  # Laranja
+                sinal = "-"
+
+            ctk.CTkLabel(scroll_trans, text=txt, font=("Consolas", 12), text_color=col, anchor="w").pack(fill="x",
+                                                                                                         padx=10)
+
+        # Botão de Voltar (Fora das abas)
+        ctk.CTkButton(frame, text="Voltar", fg_color="gray", command=self.show_main_menu).pack(pady=20)
 
     def show_admin_panel(self):
         self.clean_screen()
         bg = self.setup_background()
 
+        # Frame principal do Admin
         frame = ctk.CTkFrame(bg, fg_color="#1a1a1a", width=900, height=700)
         frame.place(relx=0.5, rely=0.5, anchor="center")
 
         ctk.CTkLabel(frame, text="🔒 PAINEL DE ADMINISTRAÇÃO", font=("Arial", 24, "bold"), text_color="red").pack(
             pady=20)
 
-        # Abas / Tabs
-        tabview = ctk.CTkTabview(frame, width=800, height=500)
+        # --- CRIAÇÃO DAS ABAS ---
+        tabview = ctk.CTkTabview(frame, width=850, height=500)
         tabview.pack(pady=10)
         tabview.add("Jogadores")
         tabview.add("Apostas Globais")
+        tabview.add("Transações Globais")
 
-        # ABA 1: JOGADORES
-        scroll_jog = ctk.CTkScrollableFrame(tabview.tab("Jogadores"), width=750, height=400)
-        scroll_jog.pack()
+        # ================= ABA 1: JOGADORES =================
+        scroll_jog = ctk.CTkScrollableFrame(tabview.tab("Jogadores"), width=800, height=400)
+        scroll_jog.pack(fill="both", expand=True)
+
         jogadores = db_manager.admin_obter_todos_jogadores()
 
         ctk.CTkLabel(scroll_jog, text=f"{'ID':<5} {'NOME':<20} {'EMAIL':<30} {'SALDO':<10}",
-                     font=("Consolas", 12, "bold")).pack(anchor="w")
+                     font=("Consolas", 12, "bold"), anchor="w").pack(fill="x")
+        ctk.CTkLabel(scroll_jog, text="-" * 90).pack()
+
         for j in jogadores:
             txt = f"{j.id:<5} {j.nome:<20} {j.email:<30} {j.saldo:>8.2f}€"
-            ctk.CTkLabel(scroll_jog, text=txt, font=("Consolas", 12)).pack(anchor="w")
+            ctk.CTkLabel(scroll_jog, text=txt, font=("Consolas", 12), anchor="w").pack(fill="x")
 
-        # ABA 2: APOSTAS GLOBAIS (CORRIGIDA)
-        scroll_bet = ctk.CTkScrollableFrame(tabview.tab("Apostas Globais"), width=750, height=400)
-        scroll_bet.pack()
+        # ================= ABA 2: APOSTAS GLOBAIS =================
+        scroll_bet = ctk.CTkScrollableFrame(tabview.tab("Apostas Globais"), width=800, height=400)
+        scroll_bet.pack(fill="both", expand=True)
+
         apostas = db_manager.admin_obter_todas_apostas()
 
-        # Cabeçalho: RESULTADO em vez de VALOR
-        # ID(5) | EMAIL(30) | JOGO(15) | RES(10) | LUCRO(10) | DATA
-        header_txt = f"{'ID':<5} {'EMAIL DO JOGADOR':<30} {'JOGO':<15} {'RESULTADO':<10} {'LUCRO':<10} {'DATA'}"
-        ctk.CTkLabel(scroll_bet, text=header_txt, font=("Consolas", 12, "bold")).pack(anchor="w")
-        ctk.CTkLabel(scroll_bet, text="-" * 100, font=("Consolas", 12)).pack(anchor="w")
+        header_bet = f"{'ID':<5} {'EMAIL':<30} {'JOGO':<15} {'RES':<10} {'LUCRO':<10} {'DATA'}"
+        ctk.CTkLabel(scroll_bet, text=header_bet, font=("Consolas", 12, "bold"), anchor="w").pack(fill="x")
+        ctk.CTkLabel(scroll_bet, text="-" * 100).pack()
 
         for a in apostas:
             dt = a.dataAposta.strftime('%d/%m %H:%M')
-
-            # Nota: a.resultado vem agora da query
             txt = f"{a.id:<5} {a.email:<30} {a.jogo_nome:<15} {a.resultado:<10} {a.lucro:>+8.2f}€ {dt}"
-
             col = "green" if a.lucro > 0 else "red"
-            ctk.CTkLabel(scroll_bet, text=txt, font=("Consolas", 12), text_color=col).pack(anchor="w")
+            ctk.CTkLabel(scroll_bet, text=txt, font=("Consolas", 12), text_color=col, anchor="w").pack(fill="x")
 
+        # ================= ABA 3: TRANSAÇÕES GLOBAIS (CORRIGIDA) =================
+        scroll_trans = ctk.CTkScrollableFrame(tabview.tab("Transações Globais"), width=800, height=400)
+        scroll_trans.pack(fill="both", expand=True)
+
+        transacoes = db_manager.admin_obter_todas_transacoes()
+
+        # Cabeçalho limpo: Sem ID de Transação, apenas Jogador, Tipo, Valor e Data
+        header_trans = f"{'JOGADOR (ID - Email)':<40} {'TIPO':<15} {'VALOR':<10} {'DATA'}"
+        ctk.CTkLabel(scroll_trans, text=header_trans, font=("Consolas", 12, "bold"), anchor="w").pack(fill="x")
+        ctk.CTkLabel(scroll_trans, text="-" * 100).pack()
+
+        for t in transacoes:
+            dt = t.data.strftime('%d/%m %H:%M')
+
+            # Combina ID do Jogador e Email numa só coluna
+            user_info = f"{t.jogador_id} - {t.email}"
+            # Se o email for muito comprido, cortamos para não partir a tabela
+            if len(user_info) > 38: user_info = user_info[:35] + "..."
+
+            # Formatação da linha sem o ID da transação
+            txt = f"{user_info:<40} {t.tipoDeTransacao:<15} {t.valor:>8.2f}€ {dt}"
+
+            # Cores: Verde para Depósitos, Laranja para Levantamentos
+            col = "#4CAF50" if "Deposito" in t.tipoDeTransacao else "#FF9800"
+
+            ctk.CTkLabel(scroll_trans, text=txt, font=("Consolas", 12), text_color=col, anchor="w").pack(fill="x")
+
+        # Botão ÚNICO de Voltar (Fora das abas, no fundo do frame)
         ctk.CTkButton(frame, text="Voltar ao Menu", fg_color="gray", command=self.show_main_menu).pack(pady=20)
+
     # --- UTILITÁRIOS (Mantidos igual) ---
     def create_top_bar(self, p):
         top = ctk.CTkFrame(p, height=40, fg_color="#2b2b2b");
