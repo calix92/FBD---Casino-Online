@@ -147,20 +147,59 @@ class CasinoApp(ctk.CTk):
         ctk.CTkButton(menu_frame, text="Sair", fg_color="red", command=self.show_login_screen).pack(pady=20)
 
     def menu_depositar(self):
-        dialog = ctk.CTkInputDialog(text="Quanto queres depositar? (€)", title="Depósito")
-        valor_str = dialog.get_input()
-        if valor_str:
+        # Janela personalizada para pedir Valor e Método
+        dep_window = ctk.CTkToplevel(self)
+        dep_window.title("Depósito")
+        dep_window.geometry("400x350")
+        dep_window.resizable(False, False)  # Não permite redimensionar para manter o layout
+
+        # Fazer a janela modal (ficar por cima)
+        dep_window.transient(self)
+        dep_window.grab_set()
+
+        ctk.CTkLabel(dep_window, text="💰 EFETUAR DEPÓSITO", font=("Arial", 22, "bold")).pack(pady=20)
+
+        # ================= SELEÇÃO DE MÉTODO =================
+        ctk.CTkLabel(dep_window, text="1. Método de Pagamento:", font=("Arial", 14)).pack(pady=(10, 5))
+
+        metodos = ["MBWay", "Visa", "Mastercard", "PayPal", "Multibanco"]
+        combo_metodo = ctk.CTkComboBox(dep_window, values=metodos, width=250)
+        combo_metodo.pack(pady=5)
+        combo_metodo.set("MBWay")  # Valor default
+
+        # ================= ENTRADA DE VALOR =================
+        ctk.CTkLabel(dep_window, text="2. Valor (€):", font=("Arial", 14)).pack(pady=(20, 5))
+        valor_entry = ctk.CTkEntry(dep_window, width=250, justify="center")
+        valor_entry.pack(pady=10)
+
+        def confirmar_deposito():
+            valor_str = valor_entry.get()
+            metodo = combo_metodo.get()
+
+            if not valor_str:
+                messagebox.showerror("Erro", "Por favor, introduz um valor.")
+                return
+
             try:
                 valor = float(valor_str)
                 if valor <= 0: raise ValueError
-                if db_manager.depositar_saldo(self.jogador['id'], valor):
+
+                # Chama a função atualizada do DB, passando o método
+                if db_manager.depositar_saldo(self.jogador['id'], valor, metodo):
                     self.jogador['saldo'] += valor
-                    messagebox.showinfo("Sucesso", f"Depositaste {valor}€ com sucesso!")
-                    self.show_main_menu()
+                    messagebox.showinfo("Sucesso", f"Depositaste {valor:.2f}€ via {metodo}!")
+                    self.show_main_menu()  # Atualiza o saldo no menu principal
+                    dep_window.destroy()
                 else:
-                    messagebox.showerror("Erro", "Falha na base de dados.")
+                    messagebox.showerror("Erro", "Falha na base de dados ao registar a transação.")
             except:
-                messagebox.showerror("Erro", "Valor inválido.")
+                messagebox.showerror("Erro", "Valor inválido. Certifica-te que é um número positivo.")
+
+        ctk.CTkButton(dep_window, text="CONFIRMAR DEPÓSITO", height=40, fg_color="#4CAF50",
+                      command=confirmar_deposito).pack(pady=20)
+
+        # Inicia o loop da janela (necessário para a CTkToplevel)
+        dep_window.mainloop()
 
     def menu_levantar(self):
         dialog = ctk.CTkInputDialog(text="Quanto queres levantar? (€)", title="Levantamento")
@@ -485,7 +524,7 @@ class CasinoApp(ctk.CTk):
         tabview.add("Apostas Globais")
         tabview.add("Transações Globais")
 
-        # ================= ABA 1: JOGADORES (MANTIDO) =================
+        # ================= ABA 1: JOGADORES =================
         scroll_jog = ctk.CTkScrollableFrame(tabview.tab("Jogadores"), width=800, height=400)
         scroll_jog.pack(fill="both", expand=True)
 
@@ -499,27 +538,23 @@ class CasinoApp(ctk.CTk):
             txt = f"{j.id:<5} {j.nome:<20} {j.email:<30} {j.saldo:>8.2f}€"
             ctk.CTkLabel(scroll_jog, text=txt, font=("Consolas", 12), anchor="w").pack(fill="x")
 
-        # ================= ABA 2: APOSTAS GLOBAIS (COM DEALER) =================
+        # ================= ABA 2: APOSTAS GLOBAIS =================
         scroll_bet = ctk.CTkScrollableFrame(tabview.tab("Apostas Globais"), width=800, height=400)
         scroll_bet.pack(fill="both", expand=True)
 
         apostas = db_manager.admin_obter_todas_apostas()
 
-        # Cabeçalho Apostas Globais: ADICIONADO DEALER
-        # ID(5) | EMAIL(25) | JOGO(10) | DEALER(15) | RES(8) | LUCRO(8) | DATA
-        header_bet = f"{'ID':<5} {'EMAIL':<25} {'JOGO':<10} {'DEALER':<15} {'RES':<8} {'LUCRO':<8} {'DATA'}"
+        header_bet = f"{'ID':<5} {'EMAIL':<30} {'JOGO':<15} {'RES':<10} {'LUCRO':<10} {'DATA'}"
         ctk.CTkLabel(scroll_bet, text=header_bet, font=("Consolas", 12, "bold"), anchor="w").pack(fill="x")
-        ctk.CTkLabel(scroll_bet, text="-" * 105).pack()
+        ctk.CTkLabel(scroll_bet, text="-" * 100).pack()
 
         for a in apostas:
             dt = a.dataAposta.strftime('%d/%m %H:%M')
-            # Nova formatação para incluir o nome do dealer (a.nome_dealer)
-            txt = f"{a.id:<5} {a.email:<25} {a.jogo_nome:<10} {a.nome_dealer:<15} {a.resultado:<8} {a.lucro:>+6.2f}€ {dt}"
-
+            txt = f"{a.id:<5} {a.email:<30} {a.jogo_nome:<15} {a.resultado:<10} {a.lucro:>+8.2f}€ {dt}"
             col = "green" if a.lucro > 0 else "red"
-            ctk.CTkLabel(scroll_bet, text=txt, font=("Consolas", 10), text_color=col, anchor="w").pack(fill="x")
+            ctk.CTkLabel(scroll_bet, text=txt, font=("Consolas", 12), text_color=col, anchor="w").pack(fill="x")
 
-        # ================= ABA 3: TRANSAÇÕES GLOBAIS (MANTIDO) =================
+        # ================= ABA 3: TRANSAÇÕES GLOBAIS (CORRIGIDA) =================
         scroll_trans = ctk.CTkScrollableFrame(tabview.tab("Transações Globais"), width=800, height=400)
         scroll_trans.pack(fill="both", expand=True)
 
@@ -535,6 +570,7 @@ class CasinoApp(ctk.CTk):
 
             # Combina ID do Jogador e Email numa só coluna
             user_info = f"{t.jogador_id} - {t.email}"
+            # Se o email for muito comprido, cortamos para não partir a tabela
             if len(user_info) > 38: user_info = user_info[:35] + "..."
 
             # Formatação da linha sem o ID da transação

@@ -107,18 +107,33 @@ def atualizar_saldo_local(jogador_id):
         return 0.0
 
 
-def depositar_saldo(jogador_id, valor):
+def depositar_saldo(jogador_id, valor, metodo="Desconhecido"):
     try:
         conn = get_connection()
         cursor = conn.cursor()
+
+        # 1. Inserir na Transacao
         sql_trans = "INSERT INTO Transacao (jogador_id, valor, tipoDeTransacao, sucesso) VALUES (?, ?, 'Deposito App', 1)"
         cursor.execute(sql_trans, (jogador_id, valor))
+
+        # Obter o ID da transação que acabámos de criar
+        cursor.execute("SELECT @@IDENTITY")
+        transacao_id = cursor.fetchone()[0]
+
+        # 2. Inserir no HistoricoPagamento (USANDO A TABELA)
+        # numRegisto pode ser 1 (sequencial simples para este caso)
+        sql_pag = "INSERT INTO HistoricoPagamento (transacao_id, numRegisto, metodo, estado, valor) VALUES (?, 1, ?, 'Concluido', ?)"
+        cursor.execute(sql_pag, (transacao_id, metodo, valor))
+
+        # 3. Atualizar Saldo
         sql_update = "UPDATE Jogador SET saldo = saldo + ? WHERE id = ?"
         cursor.execute(sql_update, (valor, jogador_id))
-        conn.commit();
+
+        conn.commit()
         conn.close()
         return True
-    except:
+    except Exception as e:
+        print(f"Erro no depósito: {e}")
         return False
 
 
