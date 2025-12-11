@@ -131,6 +131,9 @@ class CasinoApp(ctk.CTk):
         ctk.CTkButton(menu_frame, text="💰 DEPOSITAR", width=300, height=40, fg_color="#4CAF50", text_color="white",
                       command=self.menu_depositar).pack(pady=10)
 
+        ctk.CTkButton(menu_frame, text="💸 LEVANTAR", width=300, height=40, fg_color="#F44336", text_color="white",
+                      command=self.menu_levantar).pack(pady=5)
+
         # --- NOVO: Botão Meu Histórico ---
         ctk.CTkButton(menu_frame, text="📜 MEU HISTÓRICO", width=300, height=40, fg_color="#2196F3",
                       command=self.show_my_history).pack(pady=10)
@@ -155,6 +158,29 @@ class CasinoApp(ctk.CTk):
                     self.show_main_menu()
                 else:
                     messagebox.showerror("Erro", "Falha na base de dados.")
+            except:
+                messagebox.showerror("Erro", "Valor inválido.")
+
+    def menu_levantar(self):
+        dialog = ctk.CTkInputDialog(text="Quanto queres levantar? (€)", title="Levantamento")
+        valor_str = dialog.get_input()
+
+        if valor_str:
+            try:
+                valor = float(valor_str)
+                if valor <= 0: raise ValueError
+
+                # Verificar se tem saldo suficiente antes de ir à BD
+                if valor > self.jogador['saldo']:
+                    messagebox.showerror("Erro", "Saldo insuficiente para esse levantamento!")
+                    return
+
+                if db_manager.levantar_saldo(self.jogador['id'], valor):
+                    self.jogador['saldo'] -= valor
+                    messagebox.showinfo("Sucesso", f"Levantaste {valor}€! O dinheiro foi enviado.")
+                    self.show_main_menu()  # Atualiza o saldo no ecrã
+                else:
+                    messagebox.showerror("Erro", "Erro ao processar levantamento.")
             except:
                 messagebox.showerror("Erro", "Valor inválido.")
 

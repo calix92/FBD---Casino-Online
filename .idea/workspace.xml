@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d64ea730-416e-47d2-bed5-03aef5891790" name="Changes" comment="to">
-      <change beforePath="$PROJECT_DIR$/07_admin_update.sql" beforeDir="false" afterPath="$PROJECT_DIR$/07_admin_update.sql" afterDir="false" />
+    <list default="true" id="d64ea730-416e-47d2-bed5-03aef5891790" name="Changes" comment="fds">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/db_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui_casino.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui_casino.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +108,7 @@
       <workItem from="1765420495552" duration="4310000" />
       <workItem from="1765424878582" duration="85000" />
       <workItem from="1765425126262" duration="25000" />
-      <workItem from="1765425612158" duration="819000" />
+      <workItem from="1765425612158" duration="2782000" />
     </task>
     <task id="LOCAL-00003" summary="coisa linda, bulimos muito">
       <option name="closed" value="true" />
@@ -140,7 +142,31 @@
       <option name="project" value="LOCAL" />
       <updated>1765426175848</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fds">
+      <option name="closed" value="true" />
+      <created>1765427024412</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1765427024412</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fds">
+      <option name="closed" value="true" />
+      <created>1765427046167</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1765427046167</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fds">
+      <option name="closed" value="true" />
+      <created>1765428459794</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1765428459794</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,10 +176,11 @@
     <MESSAGE value="ddl corrigido e drop tables se algum dia for necessário" />
     <MESSAGE value="coisa linda, bulimos muito" />
     <MESSAGE value="to" />
-    <option name="LAST_COMMIT_MESSAGE" value="to" />
+    <MESSAGE value="fds" />
+    <option name="LAST_COMMIT_MESSAGE" value="fds" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/FBD___Casino_Online$main.coverage" NAME="main Coverage Results" MODIFIED="1765335520740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/FBD___Casino_Online$gui_casino.coverage" NAME="gui_casino Coverage Results" MODIFIED="1765425799760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/FBD___Casino_Online$gui_casino.coverage" NAME="gui_casino Coverage Results" MODIFIED="1765428644264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

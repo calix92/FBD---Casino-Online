@@ -180,3 +180,25 @@ def admin_obter_todas_apostas():
         conn.close()
         return rows
     except: return []
+
+
+def levantar_saldo(jogador_id, valor):
+    """Regista o levantamento e retira o dinheiro da conta"""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        # 1. Registar na tabela Transacao
+        sql_trans = "INSERT INTO Transacao (jogador_id, valor, tipoDeTransacao, sucesso) VALUES (?, ?, 'Levantamento', 1)"
+        cursor.execute(sql_trans, (jogador_id, valor))
+
+        # 2. Atualizar (Subtrair) o saldo do Jogador
+        sql_update = "UPDATE Jogador SET saldo = saldo - ? WHERE id = ?"
+        cursor.execute(sql_update, (valor, jogador_id))
+
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Erro Levantamento: {e}")
+        return False
