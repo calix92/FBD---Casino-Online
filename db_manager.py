@@ -109,3 +109,24 @@ def atualizar_saldo_local(jogador_id):
         return float(row.saldo) if row else 0.0
     except:
         return 0.0
+
+
+def depositar_saldo(jogador_id, valor):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        # 1. Registar Transação
+        sql_trans = "INSERT INTO Transacao (jogador_id, valor, tipoDeTransacao, sucesso) VALUES (?, ?, 'Deposito App', 1)"
+        cursor.execute(sql_trans, (jogador_id, valor))
+
+        # 2. Atualizar Saldo
+        sql_update = "UPDATE Jogador SET saldo = saldo + ? WHERE id = ?"
+        cursor.execute(sql_update, (valor, jogador_id))
+
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Erro Deposito: {e}")
+        return False

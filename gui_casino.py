@@ -116,10 +116,9 @@ class CasinoApp(ctk.CTk):
 
     def show_main_menu(self):
         self.clean_screen()
-        bg = self.setup_background()  # Mete a foto do homem
+        bg = self.setup_background()
 
-        # Caixa transparente no meio
-        menu_frame = ctk.CTkFrame(bg, fg_color="#2b2b2b", corner_radius=20, width=500, height=400)
+        menu_frame = ctk.CTkFrame(bg, fg_color="#2b2b2b", corner_radius=20, width=500, height=450)  # Aumentei altura
         menu_frame.place(relx=0.5, rely=0.5, anchor="center")
 
         ctk.CTkLabel(menu_frame, text=f"Bem-vindo, {self.jogador['nome']}", font=("Arial", 20, "bold")).pack(
@@ -128,12 +127,35 @@ class CasinoApp(ctk.CTk):
                      font=("Arial", 18)).pack(pady=10)
 
         ctk.CTkButton(menu_frame, text="🃏 JOGAR BLACKJACK", width=300, height=50, fg_color="#D4AF37",
-                      text_color="black", command=self.iniciar_blackjack).pack(pady=20)
+                      text_color="black", command=self.iniciar_blackjack).pack(pady=10)
         ctk.CTkButton(menu_frame, text="🎲 JOGAR BANCA FRANCESA", width=300, height=50, fg_color="#D4AF37",
                       text_color="black", command=self.iniciar_banca).pack(pady=10)
 
-        ctk.CTkButton(menu_frame, text="Sair", fg_color="red", command=self.show_login_screen).pack(pady=30)
+        # --- NOVO BOTÃO DE DEPÓSITO ---
+        ctk.CTkButton(menu_frame, text="💰 DEPOSITAR", width=300, height=50, fg_color="#4CAF50", text_color="white",
+                      command=self.menu_depositar).pack(pady=10)
 
+        ctk.CTkButton(menu_frame, text="Sair", fg_color="red", command=self.show_login_screen).pack(pady=20)
+
+    # --- NOVA FUNÇÃO PARA A JANELINHA DE DEPÓSITO ---
+    def menu_depositar(self):
+        # Abre uma caixinha simples para pedir o valor
+        dialog = ctk.CTkInputDialog(text="Quanto queres depositar? (€)", title="Depósito")
+        valor_str = dialog.get_input()
+
+        if valor_str:
+            try:
+                valor = float(valor_str)
+                if valor <= 0: raise ValueError
+
+                if db_manager.depositar_saldo(self.jogador['id'], valor):
+                    self.jogador['saldo'] += valor
+                    messagebox.showinfo("Sucesso", f"Depositaste {valor}€ com sucesso!")
+                    self.show_main_menu()  # Recarrega o menu para atualizar o saldo
+                else:
+                    messagebox.showerror("Erro", "Falha na base de dados.")
+            except:
+                messagebox.showerror("Erro", "Valor inválido.")
     # ================= 3. BLACKJACK (O teu código adaptado) =================
 
     def iniciar_blackjack(self):
