@@ -2,6 +2,9 @@ import customtkinter as ctk
 from tkinter import messagebox
 import db_manager
 import random
+from PIL import Image, ImageTk
+import os
+import time
 
 # --- CONFIGURAÇÃO VISUAL ---
 ctk.set_appearance_mode("Dark")
@@ -11,323 +14,417 @@ ctk.set_default_color_theme("green")
 class CasinoApp(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("Casino P3G4 - Blackjack")
+        self.title("Casino P3G4 - Blackjack & Banca Francesa")
         self.geometry("900x600")
 
-        self.jogador = None  # Vai guardar os dados do user
+        # Arrancar maximizado
+        self.after(0, lambda: self.state('zoomed'))
 
-        # Iniciar no Ecrã de Login
+        self.jogador = None
+        self.bg_image = None
+        self.bg_label = None
+
+        # Carregar a imagem uma vez para memória
+        self.carregar_imagem_fundo()
+
+        # Iniciar
         self.show_login_screen()
 
-    # ================= TELA DE LOGIN =================
-    def show_login_screen(self):
-        self.clean_screen()
-
-        frame = ctk.CTkFrame(self)
-        frame.pack(pady=40, padx=40, fill="both", expand=True)
-
-        label = ctk.CTkLabel(frame, text="♣️ CASINO ONLINE ♦️", font=("Roboto", 24, "bold"))
-        label.pack(pady=20)
-
-        self.email_entry = ctk.CTkEntry(frame, placeholder_text="Email", width=300)
-        self.email_entry.pack(pady=10)
-
-        self.pass_entry = ctk.CTkEntry(frame, placeholder_text="Password", show="*", width=300)
-        self.pass_entry.pack(pady=10)
-
-        btn_login = ctk.CTkButton(frame, text="Entrar", command=self.fazer_login)
-        btn_login.pack(pady=10)
-
-        btn_registo = ctk.CTkButton(frame, text="Criar Conta Nova", fg_color="transparent", border_width=2,
-                                    command=self.show_register_screen)
-        btn_registo.pack(pady=10)
-
-    # ================= TELA DE REGISTO =================
-    def show_register_screen(self):
-        self.clean_screen()
-        frame = ctk.CTkFrame(self)
-        frame.pack(pady=20, padx=40, fill="both", expand=True)
-
-        ctk.CTkLabel(frame, text="Novo Registo", font=("Roboto", 20)).pack(pady=10)
-
-        self.reg_nome = ctk.CTkEntry(frame, placeholder_text="Nome", width=300)
-        self.reg_nome.pack(pady=5)
-
-        self.reg_cc = ctk.CTkEntry(frame, placeholder_text="CC / BI", width=300)
-        self.reg_cc.pack(pady=5)
-
-        self.reg_data = ctk.CTkEntry(frame, placeholder_text="Data Nasc (YYYY-MM-DD)", width=300)
-        self.reg_data.pack(pady=5)
-
-        self.reg_email = ctk.CTkEntry(frame, placeholder_text="Email", width=300)
-        self.reg_email.pack(pady=5)
-
-        self.reg_pass = ctk.CTkEntry(frame, placeholder_text="Password", show="*", width=300)
-        self.reg_pass.pack(pady=5)
-
-        ctk.CTkButton(frame, text="Confirmar Registo", command=self.registar_user).pack(pady=15)
-        ctk.CTkButton(frame, text="Voltar", fg_color="gray", command=self.show_login_screen).pack(pady=5)
-
-    # ================= LÓGICA DE LOGIN/REGISTO =================
-    def fazer_login(self):
-        email = self.email_entry.get()
-        pw = self.pass_entry.get()
-
-        dados = db_manager.login(email, pw)
-        if dados:
-            self.jogador = dados
-            self.show_game_screen()
-        else:
-            messagebox.showerror("Erro", "Login falhou. Verifica os dados.")
-
-    def registar_user(self):
-        # Chama o DB Manager
-        sucesso, msg = db_manager.criar_jogador(
-            self.reg_nome.get(), self.reg_cc.get(), self.reg_data.get(),
-            self.reg_email.get(), self.reg_pass.get()
-        )
-        if sucesso:
-            messagebox.showinfo("Sucesso", "Conta criada! Podes fazer login.")
-            self.show_login_screen()
-        else:
-            messagebox.showerror("Erro", msg)
-
-    # ================= TELA DE JOGO (BLACKJACK) =================
-    def show_game_screen(self):
-        self.clean_screen()
-
-        # 1. Preparar Sessão na BD
-        self.mesa_id = db_manager.obter_mesa_id('Blackjack')
-        self.sessao_id = db_manager.iniciar_sessao(self.jogador['id'], self.mesa_id)
-
-        # --- UI DO JOGO ---
-        # Topo: Info do Jogador
-        top_frame = ctk.CTkFrame(self, height=50)
-        top_frame.pack(fill="x", side="top")
-
-        self.lbl_nome = ctk.CTkLabel(top_frame, text=f"👤 {self.jogador['nome']}", font=("Arial", 14))
-        self.lbl_nome.pack(side="left", padx=20)
-
-        self.lbl_saldo = ctk.CTkLabel(top_frame, text=f"💰 {self.jogador['saldo']:.2f}€", font=("Arial", 14, "bold"),
-                                      text_color="#00FF00")
-        self.lbl_saldo.pack(side="right", padx=20)
-
-        # Mesa Verde
-        self.table_frame = ctk.CTkFrame(self, fg_color="#004d00")  # Verde Casino
-        self.table_frame.pack(fill="both", expand=True, padx=10, pady=10)
-
-        # Área do Dealer
-        ctk.CTkLabel(self.table_frame, text="DEALER", text_color="white").pack(pady=(10, 0))
-        self.dealer_cards_frame = ctk.CTkFrame(self.table_frame, fg_color="transparent")
-        self.dealer_cards_frame.pack(pady=10)
-        self.lbl_dealer_score = ctk.CTkLabel(self.table_frame, text="Pontos: ?", text_color="white")
-        self.lbl_dealer_score.pack()
-
-        # Área do Jogador
-        ctk.CTkLabel(self.table_frame, text="TU", text_color="white").pack(pady=(30, 0))
-        self.player_cards_frame = ctk.CTkFrame(self.table_frame, fg_color="transparent")
-        self.player_cards_frame.pack(pady=10)
-        self.lbl_player_score = ctk.CTkLabel(self.table_frame, text="Pontos: 0", text_color="white")
-        self.lbl_player_score.pack()
-
-        # Área de Ações (Botões)
-        self.actions_frame = ctk.CTkFrame(self, height=80)
-        self.actions_frame.pack(fill="x", side="bottom")
-
-        # Input de Aposta
-        self.entry_aposta = ctk.CTkEntry(self.actions_frame, placeholder_text="Aposta (€)", width=100)
-        self.entry_aposta.pack(side="left", padx=20, pady=20)
-        self.entry_aposta.insert(0, "10")
-
-        self.btn_deal = ctk.CTkButton(self.actions_frame, text="JOGAR (DEAL)", fg_color="#D4AF37", text_color="black",
-                                      command=self.start_round)
-        self.btn_deal.pack(side="left", padx=10)
-
-        self.btn_hit = ctk.CTkButton(self.actions_frame, text="PEDIR CARTA", state="disabled", command=self.hit)
-        self.btn_hit.pack(side="left", padx=10)
-
-        self.btn_stand = ctk.CTkButton(self.actions_frame, text="PARAR", state="disabled", fg_color="red",
-                                       command=self.stand)
-        self.btn_stand.pack(side="left", padx=10)
-
-        # Botão Sair
-        ctk.CTkButton(self.actions_frame, text="SAIR", fg_color="gray", width=60, command=self.logout).pack(
-            side="right", padx=20)
-
-    # ================= LÓGICA DO BLACKJACK =================
-    def start_round(self):
-        # Validar Aposta
+    def carregar_imagem_fundo(self):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        image_path = os.path.join(current_dir, "fotocc.jpg")
         try:
-            self.valor_aposta = float(self.entry_aposta.get())
-        except:
-            messagebox.showerror("Erro", "Valor de aposta inválido!")
-            return
+            pil_image = Image.open(image_path)
+            self.bg_image = ctk.CTkImage(light_image=pil_image, dark_image=pil_image, size=(1920, 1080))
+        except Exception as e:
+            print(f"Aviso: Não foi possível carregar imagem de fundo ({e})")
 
-        if self.valor_aposta > self.jogador['saldo'] or self.valor_aposta <= 0:
-            messagebox.showerror("Erro", "Saldo insuficiente ou valor inválido.")
-            return
-
-        # Limpar mesa
-        self.clear_table_ui()
-        self.deck = self.create_deck()
-        self.player_hand = []
-        self.dealer_hand = []
-
-        # Dar cartas iniciais
-        self.player_hand.append(self.draw_card())
-        self.dealer_hand.append(self.draw_card())
-        self.player_hand.append(self.draw_card())
-        self.dealer_hand.append(self.draw_card())
-
-        # Atualizar UI
-        self.update_cards_ui(hide_dealer=True)
-        self.btn_deal.configure(state="disabled")
-        self.btn_hit.configure(state="normal")
-        self.btn_stand.configure(state="normal")
-        self.entry_aposta.configure(state="disabled")
-
-        # Verificar Blackjack imediato (21)
-        if self.calculate_score(self.player_hand) == 21:
-            self.stand()  # Passa logo para o fim
-
-    def hit(self):
-        self.player_hand.append(self.draw_card())
-        self.update_cards_ui(hide_dealer=True)
-
-        if self.calculate_score(self.player_hand) > 21:
-            self.end_round(result="bust")  # Rebentou
-
-    def stand(self):
-        # Dealer joga (simulação simples: dealer pede até ter 17)
-        while self.calculate_score(self.dealer_hand) < 17:
-            self.dealer_hand.append(self.draw_card())
-
-        self.update_cards_ui(hide_dealer=False)
-        self.determine_winner()
-
-    def determine_winner(self):
-        p_score = self.calculate_score(self.player_hand)
-        d_score = self.calculate_score(self.dealer_hand)
-
-        if d_score > 21:
-            self.end_round("dealer_bust")
-        elif p_score > d_score:
-            self.end_round("win")
-        elif p_score < d_score:
-            self.end_round("lose")
+    def setup_background(self):
+        # Coloca a foto do dealer no fundo (se existir)
+        if self.bg_image:
+            self.bg_label = ctk.CTkLabel(self, text="", image=self.bg_image)
+            self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
         else:
-            self.end_round("draw")
+            # Fundo de recurso se a foto falhar
+            self.bg_label = ctk.CTkFrame(self, fg_color="#004d00")
+            self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-    def end_round(self, result):
-        # Calcular Lucro
-        lucro = 0
-        res_str = ""
-
-        if result == "win" or result == "dealer_bust":
-            lucro = self.valor_aposta
-            res_str = "Vitoria"
-            msg = "GANHASTE! 🎉"
-        elif result == "bust" or result == "lose":
-            lucro = -self.valor_aposta
-            res_str = "Derrota"
-            msg = "PERDESTE... 💀"
-        else:
-            lucro = 0
-            res_str = "Empate"
-            msg = "EMPATE 😐"
-
-        # --- REGISTAR NA BASE DE DADOS ---
-        sucesso = db_manager.registar_aposta(self.sessao_id, self.valor_aposta, res_str, lucro)
-
-        if sucesso:
-            # Atualizar saldo visual
-            self.jogador['saldo'] += lucro
-            self.lbl_saldo.configure(text=f"💰 {self.jogador['saldo']:.2f}€")
-            messagebox.showinfo("Fim da Ronda", f"{msg}\nResultado: {res_str}\nSaldo: {self.jogador['saldo']:.2f}€")
-        else:
-            messagebox.showerror("Erro BD", "Erro ao gravar aposta! O Trigger pode ter bloqueado.")
-
-        # Reset Botões
-        self.btn_deal.configure(state="normal")
-        self.btn_hit.configure(state="disabled")
-        self.btn_stand.configure(state="disabled")
-        self.entry_aposta.configure(state="normal")
-        self.update_cards_ui(hide_dealer=False)  # Mostra tudo no fim
-
-    # ================= UTILITÁRIOS DE CARTAS =================
-    def create_deck(self):
-        suits = ['♥', '♦', '♣', '♠']
-        ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
-        deck = [{'rank': r, 'suit': s} for s in suits for r in ranks]
-        random.shuffle(deck)
-        return deck
-
-    def draw_card(self):
-        return self.deck.pop()
-
-    def calculate_score(self, hand):
-        score = 0
-        aces = 0
-        for card in hand:
-            r = card['rank']
-            if r in ['J', 'Q', 'K']:
-                score += 10
-            elif r == 'A':
-                aces += 1
-                score += 11
-            else:
-                score += int(r)
-        while score > 21 and aces:
-            score -= 10
-            aces -= 1
-        return score
-
-    def draw_card_widget(self, parent, card, hidden=False):
-        # Desenha um "cartão" bonito com CustomTkinter
-        color = "red" if card['suit'] in ['♥', '♦'] else "black"
-        text = "?" if hidden else f"{card['rank']}\n{card['suit']}"
-        text_col = "gray" if hidden else color
-        bg = "#2b2b2b" if hidden else "white"
-
-        frame = ctk.CTkFrame(parent, width=60, height=90, fg_color=bg, corner_radius=8)
-        frame.pack(side="left", padx=5)
-
-        lbl = ctk.CTkLabel(frame, text=text, text_color=text_col, font=("Arial", 18, "bold"))
-        lbl.place(relx=0.5, rely=0.5, anchor="center")
-
-    def update_cards_ui(self, hide_dealer=True):
-        # Limpar widgets antigos
-        for widget in self.player_cards_frame.winfo_children(): widget.destroy()
-        for widget in self.dealer_cards_frame.winfo_children(): widget.destroy()
-
-        # Desenhar Dealer
-        for i, card in enumerate(self.dealer_hand):
-            is_hidden = (i == 1 and hide_dealer)  # Esconde a 2ª carta
-            self.draw_card_widget(self.dealer_cards_frame, card, is_hidden)
-
-        if hide_dealer:
-            self.lbl_dealer_score.configure(text="Pontos: ?")
-        else:
-            self.lbl_dealer_score.configure(text=f"Pontos: {self.calculate_score(self.dealer_hand)}")
-
-        # Desenhar Player
-        for card in self.player_hand:
-            self.draw_card_widget(self.player_cards_frame, card)
-        self.lbl_player_score.configure(text=f"Pontos: {self.calculate_score(self.player_hand)}")
-
-    def clear_table_ui(self):
-        for widget in self.player_cards_frame.winfo_children(): widget.destroy()
-        for widget in self.dealer_cards_frame.winfo_children(): widget.destroy()
-        self.lbl_player_score.configure(text="Pontos: 0")
-        self.lbl_dealer_score.configure(text="Pontos: 0")
+        return self.bg_label  # Retorna o "pai" para metermos coisas em cima
 
     def clean_screen(self):
         for widget in self.winfo_children():
             widget.destroy()
 
-    def logout(self):
-        self.jogador = None
-        self.show_login_screen()
+    # ================= 1. LOGIN & REGISTO =================
+
+    def show_login_screen(self):
+        self.clean_screen()
+        # Aqui usamos fundo liso para ler melhor, ou podes usar a foto também
+        frame = ctk.CTkFrame(self)
+        frame.pack(pady=40, padx=40, fill="both", expand=True)
+
+        ctk.CTkLabel(frame, text="♣️ CASINO P3G4 ♦️", font=("Roboto", 30, "bold")).pack(pady=40)
+
+        self.email_entry = ctk.CTkEntry(frame, placeholder_text="Email", width=300)
+        self.email_entry.pack(pady=10)
+        self.pass_entry = ctk.CTkEntry(frame, placeholder_text="Password", show="*", width=300)
+        self.pass_entry.pack(pady=10)
+
+        ctk.CTkButton(frame, text="ENTRAR", command=self.fazer_login, width=200, height=40).pack(pady=20)
+        ctk.CTkButton(frame, text="Criar Conta", fg_color="transparent", border_width=1,
+                      command=self.show_register_screen).pack(pady=10)
+
+    def show_register_screen(self):
+        self.clean_screen()
+        frame = ctk.CTkFrame(self)
+        frame.pack(pady=20, padx=40, fill="both", expand=True)
+
+        ctk.CTkLabel(frame, text="Novo Registo", font=("Roboto", 24)).pack(pady=20)
+
+        self.reg_nome = ctk.CTkEntry(frame, placeholder_text="Nome", width=300);
+        self.reg_nome.pack(pady=5)
+        self.reg_cc = ctk.CTkEntry(frame, placeholder_text="CC", width=300);
+        self.reg_cc.pack(pady=5)
+        self.reg_data = ctk.CTkEntry(frame, placeholder_text="Data (YYYY-MM-DD)", width=300);
+        self.reg_data.pack(pady=5)
+        self.reg_email = ctk.CTkEntry(frame, placeholder_text="Email", width=300);
+        self.reg_email.pack(pady=5)
+        self.reg_pass = ctk.CTkEntry(frame, placeholder_text="Password", width=300, show="*");
+        self.reg_pass.pack(pady=5)
+
+        ctk.CTkButton(frame, text="CONFIRMAR", command=self.registar_user).pack(pady=20)
+        ctk.CTkButton(frame, text="Voltar", fg_color="gray", command=self.show_login_screen).pack(pady=5)
+
+    def fazer_login(self):
+        dados = db_manager.login(self.email_entry.get(), self.pass_entry.get())
+        if dados:
+            self.jogador = dados
+            self.show_main_menu()  # VAI PARA O MENU
+        else:
+            messagebox.showerror("Erro", "Login falhou.")
+
+    def registar_user(self):
+        ok, msg = db_manager.criar_jogador(self.reg_nome.get(), self.reg_cc.get(), self.reg_data.get(),
+                                           self.reg_email.get(), self.reg_pass.get())
+        if ok:
+            messagebox.showinfo("Sucesso", "Conta criada!");
+            self.show_login_screen()
+        else:
+            messagebox.showerror("Erro", msg)
+
+    # ================= 2. MENU PRINCIPAL (NOVO!) =================
+
+    def show_main_menu(self):
+        self.clean_screen()
+        bg = self.setup_background()  # Mete a foto do homem
+
+        # Caixa transparente no meio
+        menu_frame = ctk.CTkFrame(bg, fg_color="#2b2b2b", corner_radius=20, width=500, height=400)
+        menu_frame.place(relx=0.5, rely=0.5, anchor="center")
+
+        ctk.CTkLabel(menu_frame, text=f"Bem-vindo, {self.jogador['nome']}", font=("Arial", 20, "bold")).pack(
+            pady=(30, 10))
+        ctk.CTkLabel(menu_frame, text=f"Saldo: {self.jogador['saldo']:.2f}€", text_color="#00FF00",
+                     font=("Arial", 18)).pack(pady=10)
+
+        ctk.CTkButton(menu_frame, text="🃏 JOGAR BLACKJACK", width=300, height=50, fg_color="#D4AF37",
+                      text_color="black", command=self.iniciar_blackjack).pack(pady=20)
+        ctk.CTkButton(menu_frame, text="🎲 JOGAR BANCA FRANCESA", width=300, height=50, fg_color="#D4AF37",
+                      text_color="black", command=self.iniciar_banca).pack(pady=10)
+
+        ctk.CTkButton(menu_frame, text="Sair", fg_color="red", command=self.show_login_screen).pack(pady=30)
+
+    # ================= 3. BLACKJACK (O teu código adaptado) =================
+
+    def iniciar_blackjack(self):
+        self.mesa_id = db_manager.obter_mesa_id('Blackjack')
+        if not self.mesa_id: messagebox.showerror("Erro", "Mesa não encontrada na BD!"); return
+        self.sessao_id = db_manager.iniciar_sessao(self.jogador['id'], self.mesa_id)
+        self.show_blackjack_screen()
+
+    def show_blackjack_screen(self):
+        self.clean_screen()
+        bg = self.setup_background()
+
+        # --- UI DO BLACKJACK ---
+        self.create_top_bar(self)
+
+        # Botões
+        self.actions_frame = ctk.CTkFrame(self, height=100, fg_color="#2b2b2b")
+        self.actions_frame.pack(side="bottom", fill="x");
+        self.actions_frame.pack_propagate(False)
+
+        self.entry_aposta = ctk.CTkEntry(self.actions_frame, placeholder_text="€", width=80);
+        self.entry_aposta.pack(side="left", padx=20)
+        self.entry_aposta.insert(0, "10")
+
+        self.btn_deal = ctk.CTkButton(self.actions_frame, text="JOGAR", fg_color="#D4AF37", text_color="black",
+                                      command=self.bj_deal);
+        self.btn_deal.pack(side="left", padx=10)
+        self.btn_hit = ctk.CTkButton(self.actions_frame, text="PEDIR", state="disabled", command=self.bj_hit);
+        self.btn_hit.pack(side="left", padx=10)
+        self.btn_stand = ctk.CTkButton(self.actions_frame, text="PARAR", state="disabled", fg_color="red",
+                                       command=self.bj_stand);
+        self.btn_stand.pack(side="left", padx=10)
+        ctk.CTkButton(self.actions_frame, text="MENU", fg_color="gray", command=self.show_main_menu).pack(side="right",
+                                                                                                          padx=20)
+
+        # Labels Dealer/Player
+        ctk.CTkLabel(bg, text="DEALER", font=("Arial", 24, "bold"), text_color="yellow", fg_color="transparent").pack(
+            pady=(80, 10))
+        self.dealer_cards_frame = ctk.CTkFrame(bg, fg_color="transparent");
+        self.dealer_cards_frame.pack()
+        self.lbl_dealer_score = ctk.CTkLabel(bg, text="?", font=("Arial", 18), text_color="yellow",
+                                             fg_color="transparent");
+        self.lbl_dealer_score.pack()
+
+        ctk.CTkLabel(bg, text="", height=80, fg_color="transparent").pack()  # Espaço
+
+        ctk.CTkLabel(bg, text="TU", font=("Arial", 24, "bold"), text_color="cyan", fg_color="transparent").pack(
+            pady=(10, 10))
+        self.player_cards_frame = ctk.CTkFrame(bg, fg_color="transparent");
+        self.player_cards_frame.pack()
+        self.lbl_player_score = ctk.CTkLabel(bg, text="0", font=("Arial", 18), text_color="cyan",
+                                             fg_color="transparent");
+        self.lbl_player_score.pack()
+
+    # ... Lógica do Blackjack (Reduzida para caber aqui) ...
+    def bj_deal(self):
+        try:
+            self.valor = float(self.entry_aposta.get())
+            if self.valor > self.jogador['saldo'] or self.valor <= 0: raise ValueError
+        except:
+            messagebox.showerror("Erro", "Aposta inválida"); return
+
+        self.deck = self.create_deck()
+        self.phand = [self.draw_card(), self.draw_card()]
+        self.dhand = [self.draw_card(), self.draw_card()]
+
+        self.update_bj_ui(hide=True)
+        self.btn_deal.configure(state="disabled");
+        self.entry_aposta.configure(state="disabled")
+        self.btn_hit.configure(state="normal");
+        self.btn_stand.configure(state="normal")
+
+        if self.calc_score(self.phand) == 21: self.bj_stand()
+
+    def bj_hit(self):
+        self.phand.append(self.draw_card());
+        self.update_bj_ui(hide=True)
+        if self.calc_score(self.phand) > 21: self.bj_end("bust")
+
+    def bj_stand(self):
+        while self.calc_score(self.dhand) < 17: self.dhand.append(self.draw_card())
+        self.update_bj_ui(hide=False)
+        p, d = self.calc_score(self.phand), self.calc_score(self.dhand)
+        if d > 21:
+            self.bj_end("win")
+        elif p > d:
+            self.bj_end("win")
+        elif p < d:
+            self.bj_end("lose")
+        else:
+            self.bj_end("draw")
+
+    def bj_end(self, res):
+        lucro = self.valor if res == "win" else (-self.valor if res in ["bust", "lose"] else 0)
+        txt = "Vitoria" if res == "win" else ("Derrota" if res in ["bust", "lose"] else "Empate")
+
+        if db_manager.registar_aposta(self.sessao_id, self.valor, txt, lucro):
+            self.jogador['saldo'] += lucro
+            self.update_saldo_lbl()
+            messagebox.showinfo("Fim", f"{txt}! Saldo: {self.jogador['saldo']:.2f}€")
+        else:
+            messagebox.showerror("Erro", "Erro na BD")
+
+        self.btn_deal.configure(state="normal");
+        self.entry_aposta.configure(state="normal")
+        self.btn_hit.configure(state="disabled");
+        self.btn_stand.configure(state="disabled")
+
+    def update_bj_ui(self, hide):
+        for w in self.player_cards_frame.winfo_children(): w.destroy()
+        for w in self.dealer_cards_frame.winfo_children(): w.destroy()
+
+        for c in self.phand: self.draw_c(self.player_cards_frame, c)
+        for i, c in enumerate(self.dhand): self.draw_c(self.dealer_cards_frame, c, hide and i == 1)
+
+        self.lbl_player_score.configure(text=str(self.calc_score(self.phand)))
+        self.lbl_dealer_score.configure(text="?" if hide else str(self.calc_score(self.dhand)))
+
+    # ================= 4. BANCA FRANCESA (NOVO JOGO) =================
+
+    def iniciar_banca(self):
+        self.mesa_id = db_manager.obter_mesa_id('Banca Francesa')
+        if not self.mesa_id:
+            # Fallback se não criou a mesa na BD
+            self.mesa_id = db_manager.obter_mesa_id('Blackjack')
+
+        self.sessao_id = db_manager.iniciar_sessao(self.jogador['id'], self.mesa_id)
+        self.show_banca_screen()
+
+    def show_banca_screen(self):
+        self.clean_screen()
+        bg = self.setup_background()
+        self.create_top_bar(self)
+
+        # --- ÁREA DOS DADOS ---
+        ctk.CTkLabel(bg, text="BANCA FRANCESA", font=("Arial", 30, "bold"), text_color="gold",
+                     fg_color="transparent").pack(pady=(50, 20))
+
+        # Frame para os 3 dados
+        self.dice_frame = ctk.CTkFrame(bg, fg_color="transparent")
+        self.dice_frame.pack(pady=20)
+
+        # Labels dos dados (começam vazios)
+        self.dice_labels = []
+        for _ in range(3):
+            lbl = ctk.CTkLabel(self.dice_frame, text="🎲", font=("Arial", 60), text_color="white",
+                               fg_color="transparent")
+            lbl.pack(side="left", padx=20)
+            self.dice_labels.append(lbl)
+
+        self.lbl_resultado = ctk.CTkLabel(bg, text="Faz a tua aposta...", font=("Arial", 24, "bold"),
+                                          text_color="white", fg_color="transparent")
+        self.lbl_resultado.pack(pady=30)
+
+        # --- BOTÕES DE APOSTA ---
+        self.actions_frame = ctk.CTkFrame(self, height=150, fg_color="#2b2b2b")
+        self.actions_frame.pack(side="bottom", fill="x");
+        self.actions_frame.pack_propagate(False)
+
+        ctk.CTkLabel(self.actions_frame, text="Valor da Aposta:", text_color="gray").pack(pady=(10, 0))
+        self.entry_aposta_bf = ctk.CTkEntry(self.actions_frame, width=100, justify="center");
+        self.entry_aposta_bf.pack(pady=5)
+        self.entry_aposta_bf.insert(0, "10")
+
+        btn_frame = ctk.CTkFrame(self.actions_frame, fg_color="transparent")
+        btn_frame.pack(pady=10)
+
+        # Botões das 3 opções
+        ctk.CTkButton(btn_frame, text="GRANDE\n(14, 15, 16)", fg_color="#4CAF50", width=150, height=50,
+                      command=lambda: self.jogar_banca("Grande")).pack(side="left", padx=10)
+
+        ctk.CTkButton(btn_frame, text="PEQUENO\n(5, 6, 7)", fg_color="#2196F3", width=150, height=50,
+                      command=lambda: self.jogar_banca("Pequeno")).pack(side="left", padx=10)
+
+        ctk.CTkButton(btn_frame, text="ASES\n(3)", fg_color="#F44336", width=150, height=50,
+                      command=lambda: self.jogar_banca("Ases")).pack(side="left", padx=10)
+
+        ctk.CTkButton(self.actions_frame, text="Voltar ao Menu", fg_color="gray", command=self.show_main_menu,
+                      height=30).place(relx=0.9, rely=0.8, anchor="center")
+
+    def jogar_banca(self, aposta_tipo):
+        try:
+            valor = float(self.entry_aposta_bf.get())
+            if valor > self.jogador['saldo'] or valor <= 0: raise ValueError
+        except:
+            messagebox.showerror("Erro", "Valor inválido"); return
+
+        # Animação simples (simula re-rolls)
+        self.lbl_resultado.configure(text="A lançar dados...", text_color="yellow")
+        self.update()
+        time.sleep(0.5)
+
+        # Lógica do Jogo: Loop até sair um resultado válido
+        # (Na banca francesa real, se sair 8, 9, 10... repete-se até sair Grande/Pequeno/Ases)
+        resultado_final = ""
+        soma = 0
+        dados = []
+
+        while True:
+            d1, d2, d3 = random.randint(1, 6), random.randint(1, 6), random.randint(1, 6)
+            soma = d1 + d2 + d3
+            dados = [d1, d2, d3]
+
+            if soma == 3:
+                resultado_final = "Ases";
+                break
+            elif soma in [14, 15, 16]:
+                resultado_final = "Grande";
+                break
+            elif soma in [5, 6, 7]:
+                resultado_final = "Pequeno";
+                break
+            # Se for outro valor, o loop continua (é o tal resultado nulo)
+
+        # Mostrar Dados Visuais (Unicode)
+        dice_chars = ["", "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"]
+        for i, lbl in enumerate(self.dice_labels):
+            lbl.configure(text=dice_chars[dados[i]])
+
+        # Verificar Vitoria
+        ganhou = (aposta_tipo == resultado_final)
+        lucro = 0
+
+        if ganhou:
+            if resultado_final == "Ases":
+                lucro = valor * 60  # Ases paga 60:1 (simplificado)
+            else:
+                lucro = valor  # Grande/Pequeno paga 1:1
+            txt_bd = "Vitoria"
+            cor_res = "#00FF00"
+            msg = f"SAIU {resultado_final.upper()} ({soma})! GANHASTE {lucro:.2f}€!"
+        else:
+            lucro = -valor
+            txt_bd = "Derrota"
+            cor_res = "red"
+            msg = f"Saiu {resultado_final} ({soma}). Perdeste..."
+
+        self.lbl_resultado.configure(text=msg, text_color=cor_res)
+
+        # BD
+        if db_manager.registar_aposta(self.sessao_id, valor, txt_bd, lucro):
+            self.jogador['saldo'] += lucro
+            self.update_saldo_lbl()
+        else:
+            messagebox.showerror("Erro", "Falha na BD")
+
+    # ================= 5. UTILITÁRIOS GERAIS =================
+
+    def create_top_bar(self, parent):
+        top = ctk.CTkFrame(parent, height=40, fg_color="#2b2b2b")
+        top.pack(fill="x", side="top")
+        ctk.CTkLabel(top, text=f"👤 {self.jogador['nome']}", font=("Arial", 14)).pack(side="left", padx=20)
+        self.lbl_saldo_ui = ctk.CTkLabel(top, text=f"💰 {self.jogador['saldo']:.2f}€", text_color="#00FF00",
+                                         font=("Arial", 14, "bold"))
+        self.lbl_saldo_ui.pack(side="right", padx=20)
+
+    def update_saldo_lbl(self):
+        if hasattr(self, 'lbl_saldo_ui'): self.lbl_saldo_ui.configure(text=f"💰 {self.jogador['saldo']:.2f}€")
+
+    # Utils Blackjack
+    def create_deck(self):
+        v = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+        n = ['♥', '♦', '♣', '♠']
+        d = [{'r': r, 's': s} for s in n for r in v];
+        random.shuffle(d);
+        return d
+
+    def draw_card(self):
+        return self.deck.pop()
+
+    def draw_c(self, p, c, h=False):
+        color = "red" if c['s'] in ['♥', '♦'] else "black"
+        txt = "?" if h else f"{c['r']}\n{c['s']}"
+        bg = "#222" if h else "white"
+        f = ctk.CTkFrame(p, width=60, height=80, fg_color=bg);
+        f.pack(side="left", padx=5)
+        ctk.CTkLabel(f, text=txt, text_color=("gray" if h else color), font=("Arial", 16, "bold")).place(relx=0.5,
+                                                                                                         rely=0.5,
+                                                                                                         anchor="center")
+
+    def calc_score(self, h):
+        s, a = 0, 0
+        for c in h:
+            if c['r'] in ['J', 'Q', 'K']:
+                s += 10
+            elif c['r'] == 'A':
+                a += 1; s += 11
+            else:
+                s += int(c['r'])
+        while s > 21 and a: s -= 10; a -= 1
+        return s
 
 
 if __name__ == "__main__":
