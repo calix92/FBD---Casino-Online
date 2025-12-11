@@ -244,3 +244,23 @@ def admin_obter_todas_transacoes():
     except Exception as e:
         print(f"Erro Admin Transacoes: {e}")
         return []
+
+
+def sortear_dealer_mesa(mesa_id):
+    """Pede ao SQL Server para sortear um dealer aleatório e atribuí-lo à mesa"""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        # Chama a Stored Procedure que criámos
+        sql = "{CALL sp_SortearDealerParaMesa (?)}"
+        cursor.execute(sql, (mesa_id,))
+
+        row = cursor.fetchone()
+        conn.commit()  # Importante: estamos a fazer um UPDATE na mesa
+        conn.close()
+
+        return row.nome if row else "Dealer Fantasma"
+    except Exception as e:
+        print(f"Erro ao sortear dealer: {e}")
+        return "Dealer da Casa"

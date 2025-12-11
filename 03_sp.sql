@@ -121,3 +121,28 @@ BEGIN
     WHERE id = @jogador_id;
 END
 GO
+
+-- 2. Procedure de Sorteio (CORRIGIDA COM ;)
+CREATE OR ALTER PROCEDURE sp_SortearDealerParaMesa
+    @mesa_id INT
+AS
+BEGIN
+    SET NOCOUNT ON; -- <--- O ERRO ESTAVA NA FALTA DESTE PONTO E VÍRGULA
+
+    DECLARE @dealer_id INT;
+    DECLARE @nome_dealer NVARCHAR(100);
+
+    -- 1. Selecionar um dealer aleatório usando NEWID()
+    SELECT TOP 1 @dealer_id = id, @nome_dealer = nome
+    FROM Dealer
+    ORDER BY NEWID();
+
+    -- 2. Atualizar a Mesa com este novo Dealer
+    UPDATE Mesa
+    SET dealer_id = @dealer_id
+    WHERE id = @mesa_id;
+
+    -- 3. Devolver o nome para o Python
+    SELECT @nome_dealer AS nome;
+END
+GO

@@ -12348,7 +12348,15 @@ int</ExtendedProperties>
       <RoutineType>proc</RoutineType>
       <SourceTextLength>1055</SourceTextLength>
     </routine>
-    <routine id="4067" parent="4059" name="sp_alterdiagram">
+    <routine id="4067" parent="4059" name="sp_SortearDealerParaMesa">
+      <CreatedTimestamp>2025-12-11.05:44:33.680</CreatedTimestamp>
+      <DetailsLevel>3</DetailsLevel>
+      <ModifiedTimestamp>2025-12-11.05:44:33.680</ModifiedTimestamp>
+      <ObjectId>1718297181</ObjectId>
+      <RoutineType>proc</RoutineType>
+      <SourceTextLength>604</SourceTextLength>
+    </routine>
+    <routine id="4068" parent="4059" name="sp_alterdiagram">
       <CreatedTimestamp>2025-10-13.22:33:49.127</CreatedTimestamp>
       <DetailsLevel>3</DetailsLevel>
       <ExtendedProperties>microsoft_database_tools_support
@@ -12359,7 +12367,7 @@ int</ExtendedProperties>
       <RoutineType>proc</RoutineType>
       <SourceTextLength>1501</SourceTextLength>
     </routine>
-    <routine id="4068" parent="4059" name="sp_creatediagram">
+    <routine id="4069" parent="4059" name="sp_creatediagram">
       <CreatedTimestamp>2025-10-13.22:33:49.063</CreatedTimestamp>
       <DetailsLevel>3</DetailsLevel>
       <ExtendedProperties>microsoft_database_tools_support
@@ -12370,7 +12378,7 @@ int</ExtendedProperties>
       <RoutineType>proc</RoutineType>
       <SourceTextLength>1223</SourceTextLength>
     </routine>
-    <routine id="4069" parent="4059" name="sp_dropdiagram">
+    <routine id="4070" parent="4059" name="sp_dropdiagram">
       <CreatedTimestamp>2025-10-13.22:33:49.130</CreatedTimestamp>
       <DetailsLevel>3</DetailsLevel>
       <ExtendedProperties>microsoft_database_tools_support
@@ -12381,7 +12389,7 @@ int</ExtendedProperties>
       <RoutineType>proc</RoutineType>
       <SourceTextLength>896</SourceTextLength>
     </routine>
-    <routine id="4070" parent="4059" name="sp_helpdiagramdefinition">
+    <routine id="4071" parent="4059" name="sp_helpdiagramdefinition">
       <CreatedTimestamp>2025-10-13.22:33:49.053</CreatedTimestamp>
       <DetailsLevel>3</DetailsLevel>
       <ExtendedProperties>microsoft_database_tools_support
@@ -12392,7 +12400,7 @@ int</ExtendedProperties>
       <RoutineType>proc</RoutineType>
       <SourceTextLength>921</SourceTextLength>
     </routine>
-    <routine id="4071" parent="4059" name="sp_helpdiagrams">
+    <routine id="4072" parent="4059" name="sp_helpdiagrams">
       <CreatedTimestamp>2025-10-13.22:33:49.047</CreatedTimestamp>
       <DetailsLevel>3</DetailsLevel>
       <ExtendedProperties>microsoft_database_tools_support
@@ -12403,7 +12411,7 @@ int</ExtendedProperties>
       <RoutineType>proc</RoutineType>
       <SourceTextLength>658</SourceTextLength>
     </routine>
-    <routine id="4072" parent="4059" name="sp_renamediagram">
+    <routine id="4073" parent="4059" name="sp_renamediagram">
       <CreatedTimestamp>2025-10-13.22:33:49.120</CreatedTimestamp>
       <DetailsLevel>3</DetailsLevel>
       <ExtendedProperties>microsoft_database_tools_support
@@ -12414,7 +12422,7 @@ int</ExtendedProperties>
       <RoutineType>proc</RoutineType>
       <SourceTextLength>1721</SourceTextLength>
     </routine>
-    <routine id="4073" parent="4059" name="sp_upgraddiagrams">
+    <routine id="4074" parent="4059" name="sp_upgraddiagrams">
       <CreatedTimestamp>2025-10-13.22:33:48.997</CreatedTimestamp>
       <DetailsLevel>3</DetailsLevel>
       <ExtendedProperties>microsoft_database_tools_support
@@ -12425,7 +12433,7 @@ int</ExtendedProperties>
       <RoutineType>proc</RoutineType>
       <SourceTextLength>1463</SourceTextLength>
     </routine>
-    <routine id="4074" parent="4059" name="udf_CalcularLucroTotal">
+    <routine id="4075" parent="4059" name="udf_CalcularLucroTotal">
       <CreatedTimestamp>2025-12-11.02:53:26.657</CreatedTimestamp>
       <DetailsLevel>3</DetailsLevel>
       <ModifiedTimestamp>2025-12-11.02:53:26.657</ModifiedTimestamp>
@@ -12433,7 +12441,7 @@ int</ExtendedProperties>
       <RoutineType>scalar-fun</RoutineType>
       <SourceTextLength>489</SourceTextLength>
     </routine>
-    <table id="4075" parent="4059" name="Aposta">
+    <table id="4076" parent="4059" name="Aposta">
       <CreatedTimestamp>2025-12-10.02:33:10.340</CreatedTimestamp>
       <DataRetentionPeriod>-1</DataRetentionPeriod>
       <DetailsLevel>3</DetailsLevel>
@@ -12441,7 +12449,7 @@ int</ExtendedProperties>
       <ObjectId>630293305</ObjectId>
       <LobDataSpaceId>0</LobDataSpaceId>
     </table>
-    <table id="4076" parent="4059" name="Dealer">
+    <table id="4077" parent="4059" name="Dealer">
       <CreatedTimestamp>2025-12-10.02:33:10.220</CreatedTimestamp>
       <DataRetentionPeriod>-1</DataRetentionPeriod>
       <DetailsLevel>3</DetailsLevel>
@@ -12449,7 +12457,7 @@ int</ExtendedProperties>
       <ObjectId>438292621</ObjectId>
       <LobDataSpaceId>0</LobDataSpaceId>
     </table>
-    <table id="4077" parent="4059" name="HistoricoPagamento">
+    <table id="4078" parent="4059" name="HistoricoPagamento">
       <CreatedTimestamp>2025-12-10.02:33:10.163</CreatedTimestamp>
       <DataRetentionPeriod>-1</DataRetentionPeriod>
       <DetailsLevel>3</DetailsLevel>
@@ -12457,7 +12465,7 @@ int</ExtendedProperties>
       <ObjectId>342292279</ObjectId>
       <LobDataSpaceId>0</LobDataSpaceId>
     </table>
-    <table id="4078" parent="4059" name="Jogador">
+    <table id="4079" parent="4059" name="Jogador">
       <CreatedTimestamp>2025-12-10.02:33:09.827</CreatedTimestamp>
       <DataRetentionPeriod>-1</DataRetentionPeriod>
       <DetailsLevel>3</DetailsLevel>
@@ -12465,7 +12473,7 @@ int</ExtendedProperties>
       <ObjectId>86291367</ObjectId>
       <LobDataSpaceId>0</LobDataSpaceId>
     </table>
-    <table id="4079" parent="4059" name="Jogo">
+    <table id="4080" parent="4059" name="Jogo">
       <CreatedTimestamp>2025-12-10.02:33:10.190</CreatedTimestamp>
       <DataRetentionPeriod>-1</DataRetentionPeriod>
       <DetailsLevel>3</DetailsLevel>
@@ -12473,7 +12481,7 @@ int</ExtendedProperties>
       <ObjectId>406292507</ObjectId>
       <LobDataSpaceId>1</LobDataSpaceId>
     </table>
-    <table id="4080" parent="4059" name="Mesa">
+    <table id="4081" parent="4059" name="Mesa">
       <CreatedTimestamp>2025-12-10.02:33:10.270</CreatedTimestamp>
       <DataRetentionPeriod>-1</DataRetentionPeriod>
       <DetailsLevel>3</DetailsLevel>
@@ -12481,7 +12489,7 @@ int</ExtendedProperties>
       <ObjectId>470292735</ObjectId>
       <LobDataSpaceId>0</LobDataSpaceId>
     </table>
-    <table id="4081" parent="4059" name="RegistoLogin">
+    <table id="4082" parent="4059" name="RegistoLogin">
       <CreatedTimestamp>2025-12-10.02:33:10</CreatedTimestamp>
       <DataRetentionPeriod>-1</DataRetentionPeriod>
       <DetailsLevel>3</DetailsLevel>
@@ -12489,7 +12497,7 @@ int</ExtendedProperties>
       <ObjectId>182291709</ObjectId>
       <LobDataSpaceId>0</LobDataSpaceId>
     </table>
-    <table id="4082" parent="4059" name="SessaoDeJogo">
+    <table id="4083" parent="4059" name="SessaoDeJogo">
       <CreatedTimestamp>2025-12-10.02:33:10.307</CreatedTimestamp>
       <DataRetentionPeriod>-1</DataRetentionPeriod>
       <DetailsLevel>3</DetailsLevel>
@@ -12497,7 +12505,7 @@ int</ExtendedProperties>
       <ObjectId>534292963</ObjectId>
       <LobDataSpaceId>0</LobDataSpaceId>
     </table>
-    <table id="4083" parent="4059" name="Transacao">
+    <table id="4084" parent="4059" name="Transacao">
       <CreatedTimestamp>2025-12-10.02:33:10.103</CreatedTimestamp>
       <DataRetentionPeriod>-1</DataRetentionPeriod>
       <DetailsLevel>3</DetailsLevel>
@@ -12505,108 +12513,103 @@ int</ExtendedProperties>
       <ObjectId>262291994</ObjectId>
       <LobDataSpaceId>0</LobDataSpaceId>
     </table>
-    <argument id="4084" parent="4062">
+    <argument id="4085" parent="4062">
       <ArgumentDirection>R</ArgumentDirection>
       <StoredType>int|0s</StoredType>
     </argument>
-    <argument id="4085" parent="4063" name="@jogador_id">
+    <argument id="4086" parent="4063" name="@jogador_id">
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </argument>
-    <argument id="4086" parent="4063" name="@mesa_id">
+    <argument id="4087" parent="4063" name="@mesa_id">
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </argument>
-    <argument id="4087" parent="4064" name="@email">
+    <argument id="4088" parent="4064" name="@email">
       <Position>1</Position>
       <StoredType>nvarchar(100 char)|0s</StoredType>
     </argument>
-    <argument id="4088" parent="4064" name="@password">
+    <argument id="4089" parent="4064" name="@password">
       <Position>2</Position>
       <StoredType>nvarchar(255 char)|0s</StoredType>
     </argument>
-    <argument id="4089" parent="4064" name="@ip">
+    <argument id="4090" parent="4064" name="@ip">
       <Position>3</Position>
       <StoredType>nvarchar(45 char)|0s</StoredType>
     </argument>
-    <argument id="4090" parent="4065" name="@sessao_id">
+    <argument id="4091" parent="4065" name="@sessao_id">
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </argument>
-    <argument id="4091" parent="4065" name="@valor">
+    <argument id="4092" parent="4065" name="@valor">
       <Position>2</Position>
       <StoredType>decimal(10,2)|0s</StoredType>
     </argument>
-    <argument id="4092" parent="4065" name="@resultado">
+    <argument id="4093" parent="4065" name="@resultado">
       <Position>3</Position>
       <StoredType>nvarchar(50 char)|0s</StoredType>
     </argument>
-    <argument id="4093" parent="4065" name="@lucro">
+    <argument id="4094" parent="4065" name="@lucro">
       <Position>4</Position>
       <StoredType>decimal(10,2)|0s</StoredType>
     </argument>
-    <argument id="4094" parent="4066" name="@nome">
+    <argument id="4095" parent="4066" name="@nome">
       <Position>1</Position>
       <StoredType>nvarchar(100 char)|0s</StoredType>
     </argument>
-    <argument id="4095" parent="4066" name="@cc">
+    <argument id="4096" parent="4066" name="@cc">
       <Position>2</Position>
       <StoredType>nvarchar(20 char)|0s</StoredType>
     </argument>
-    <argument id="4096" parent="4066" name="@dataNascimento">
+    <argument id="4097" parent="4066" name="@dataNascimento">
       <Position>3</Position>
       <StoredType>date|0s</StoredType>
     </argument>
-    <argument id="4097" parent="4066" name="@email">
+    <argument id="4098" parent="4066" name="@email">
       <Position>4</Position>
       <StoredType>nvarchar(100 char)|0s</StoredType>
     </argument>
-    <argument id="4098" parent="4066" name="@password">
+    <argument id="4099" parent="4066" name="@password">
       <Position>5</Position>
       <StoredType>nvarchar(255 char)|0s</StoredType>
     </argument>
-    <argument id="4099" parent="4067" name="@diagramname">
+    <argument id="4100" parent="4067" name="@mesa_id">
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </argument>
+    <argument id="4101" parent="4068" name="@diagramname">
       <Position>1</Position>
       <StoredType>sysname|0s</StoredType>
     </argument>
-    <argument id="4100" parent="4067" name="@owner_id">
+    <argument id="4102" parent="4068" name="@owner_id">
       <DefaultExpression>null</DefaultExpression>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </argument>
-    <argument id="4101" parent="4067" name="@version">
+    <argument id="4103" parent="4068" name="@version">
       <Position>3</Position>
       <StoredType>int|0s</StoredType>
     </argument>
-    <argument id="4102" parent="4067" name="@definition">
+    <argument id="4104" parent="4068" name="@definition">
       <Position>4</Position>
       <StoredType>varbinary(max)|0s</StoredType>
     </argument>
-    <argument id="4103" parent="4068" name="@diagramname">
+    <argument id="4105" parent="4069" name="@diagramname">
       <Position>1</Position>
       <StoredType>sysname|0s</StoredType>
     </argument>
-    <argument id="4104" parent="4068" name="@owner_id">
+    <argument id="4106" parent="4069" name="@owner_id">
       <DefaultExpression>null</DefaultExpression>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </argument>
-    <argument id="4105" parent="4068" name="@version">
+    <argument id="4107" parent="4069" name="@version">
       <Position>3</Position>
       <StoredType>int|0s</StoredType>
     </argument>
-    <argument id="4106" parent="4068" name="@definition">
+    <argument id="4108" parent="4069" name="@definition">
       <Position>4</Position>
       <StoredType>varbinary(max)|0s</StoredType>
-    </argument>
-    <argument id="4107" parent="4069" name="@diagramname">
-      <Position>1</Position>
-      <StoredType>sysname|0s</StoredType>
-    </argument>
-    <argument id="4108" parent="4069" name="@owner_id">
-      <DefaultExpression>null</DefaultExpression>
-      <Position>2</Position>
-      <StoredType>int|0s</StoredType>
     </argument>
     <argument id="4109" parent="4070" name="@diagramname">
       <Position>1</Position>
@@ -12618,74 +12621,83 @@ int</ExtendedProperties>
       <StoredType>int|0s</StoredType>
     </argument>
     <argument id="4111" parent="4071" name="@diagramname">
-      <DefaultExpression>NULL</DefaultExpression>
       <Position>1</Position>
       <StoredType>sysname|0s</StoredType>
     </argument>
     <argument id="4112" parent="4071" name="@owner_id">
-      <DefaultExpression>NULL</DefaultExpression>
-      <Position>2</Position>
-      <StoredType>int|0s</StoredType>
-    </argument>
-    <argument id="4113" parent="4072" name="@diagramname">
-      <Position>1</Position>
-      <StoredType>sysname|0s</StoredType>
-    </argument>
-    <argument id="4114" parent="4072" name="@owner_id">
       <DefaultExpression>null</DefaultExpression>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </argument>
-    <argument id="4115" parent="4072" name="@new_diagramname">
+    <argument id="4113" parent="4072" name="@diagramname">
+      <DefaultExpression>NULL</DefaultExpression>
+      <Position>1</Position>
+      <StoredType>sysname|0s</StoredType>
+    </argument>
+    <argument id="4114" parent="4072" name="@owner_id">
+      <DefaultExpression>NULL</DefaultExpression>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </argument>
+    <argument id="4115" parent="4073" name="@diagramname">
+      <Position>1</Position>
+      <StoredType>sysname|0s</StoredType>
+    </argument>
+    <argument id="4116" parent="4073" name="@owner_id">
+      <DefaultExpression>null</DefaultExpression>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </argument>
+    <argument id="4117" parent="4073" name="@new_diagramname">
       <Position>3</Position>
       <StoredType>sysname|0s</StoredType>
     </argument>
-    <argument id="4116" parent="4074">
+    <argument id="4118" parent="4075">
       <ArgumentDirection>R</ArgumentDirection>
       <StoredType>decimal(10,2)|0s</StoredType>
     </argument>
-    <argument id="4117" parent="4074" name="@jogador_id">
+    <argument id="4119" parent="4075" name="@jogador_id">
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </argument>
-    <column id="4118" parent="4075" name="id">
+    <column id="4120" parent="4076" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>1(67)</SequenceIdentity>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4119" parent="4075" name="sessaoJogo_id">
+    <column id="4121" parent="4076" name="sessaoJogo_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4120" parent="4075" name="valor">
+    <column id="4122" parent="4076" name="valor">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>decimal(10,2)|0s</StoredType>
     </column>
-    <column id="4121" parent="4075" name="resultado">
+    <column id="4123" parent="4076" name="resultado">
       <Position>4</Position>
       <StoredType>nvarchar(50 char)|0s</StoredType>
     </column>
-    <column id="4122" parent="4075" name="lucro">
+    <column id="4124" parent="4076" name="lucro">
       <Position>5</Position>
       <StoredType>decimal(10,2)|0s</StoredType>
     </column>
-    <column id="4123" parent="4075" name="dataAposta">
+    <column id="4125" parent="4076" name="dataAposta">
       <Position>6</Position>
       <StoredType>datetime|0s</StoredType>
       <DefaultConstraintId>662293419</DefaultConstraintId>
       <DefaultConstraintName>DF__Aposta__dataApos__2779CBAB</DefaultConstraintName>
     </column>
-    <default id="4124" parent="4075" name="DF__Aposta__dataApos__2779CBAB">
+    <default id="4126" parent="4076" name="DF__Aposta__dataApos__2779CBAB">
       <ColNames>dataAposta</ColNames>
       <DefaultExpression>getdate()</DefaultExpression>
       <ModifiedTimestamp>2025-12-10.02:33:10.343</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>662293419</ObjectId>
     </default>
-    <foreign-key id="4125" parent="4075" name="FK__Aposta__sessaoJo__286DEFE4">
+    <foreign-key id="4127" parent="4076" name="FK__Aposta__sessaoJo__286DEFE4">
       <ColNames>sessaoJogo_id</ColNames>
       <CreatedTimestamp>2025-12-10.02:33:10.343</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.343</ModifiedTimestamp>
@@ -12696,7 +12708,7 @@ int</ExtendedProperties>
       <RefTableId>534292963</RefTableId>
       <RefTableName>SessaoDeJogo</RefTableName>
     </foreign-key>
-    <index id="4126" parent="4075" name="PK__Aposta__3213E83F56A54604">
+    <index id="4128" parent="4076" name="PK__Aposta__3213E83F56A54604">
       <Clustering>1</Clustering>
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -12704,12 +12716,12 @@ int</ExtendedProperties>
       <Unique>1</Unique>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <index id="4127" parent="4075" name="idx_Aposta_Data">
+    <index id="4129" parent="4076" name="idx_Aposta_Data">
       <ColNames>dataAposta</ColNames>
       <Position>2</Position>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <key id="4128" parent="4075" name="PK__Aposta__3213E83F56A54604">
+    <key id="4130" parent="4076" name="PK__Aposta__3213E83F56A54604">
       <CreatedTimestamp>2025-12-10.02:33:10.343</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.343</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
@@ -12717,18 +12729,18 @@ int</ExtendedProperties>
       <Primary>1</Primary>
       <UnderlyingIndexName>PK__Aposta__3213E83F56A54604</UnderlyingIndexName>
     </key>
-    <column id="4129" parent="4076" name="id">
+    <column id="4131" parent="4077" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>1(2)</SequenceIdentity>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4130" parent="4076" name="nome">
+    <column id="4132" parent="4077" name="nome">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>nvarchar(100 char)|0s</StoredType>
     </column>
-    <index id="4131" parent="4076" name="PK__Dealer__3213E83F46C25CB2">
+    <index id="4133" parent="4077" name="PK__Dealer__3213E83F46C25CB2">
       <Clustering>1</Clustering>
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -12736,7 +12748,7 @@ int</ExtendedProperties>
       <Unique>1</Unique>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <key id="4132" parent="4076" name="PK__Dealer__3213E83F46C25CB2">
+    <key id="4134" parent="4077" name="PK__Dealer__3213E83F46C25CB2">
       <CreatedTimestamp>2025-12-10.02:33:10.230</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.230</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
@@ -12744,42 +12756,42 @@ int</ExtendedProperties>
       <Primary>1</Primary>
       <UnderlyingIndexName>PK__Dealer__3213E83F46C25CB2</UnderlyingIndexName>
     </key>
-    <column id="4133" parent="4077" name="transacao_id">
+    <column id="4135" parent="4078" name="transacao_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4134" parent="4077" name="numRegisto">
+    <column id="4136" parent="4078" name="numRegisto">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4135" parent="4077" name="metodo">
+    <column id="4137" parent="4078" name="metodo">
       <Position>3</Position>
       <StoredType>nvarchar(50 char)|0s</StoredType>
     </column>
-    <column id="4136" parent="4077" name="estado">
+    <column id="4138" parent="4078" name="estado">
       <Position>4</Position>
       <StoredType>nvarchar(30 char)|0s</StoredType>
     </column>
-    <column id="4137" parent="4077" name="valor">
+    <column id="4139" parent="4078" name="valor">
       <Position>5</Position>
       <StoredType>decimal(10,2)|0s</StoredType>
     </column>
-    <column id="4138" parent="4077" name="dataPagamento">
+    <column id="4140" parent="4078" name="dataPagamento">
       <Position>6</Position>
       <StoredType>datetime|0s</StoredType>
       <DefaultConstraintId>374292393</DefaultConstraintId>
       <DefaultConstraintName>DF__Historico__dataP__164F3FA9</DefaultConstraintName>
     </column>
-    <default id="4139" parent="4077" name="DF__Historico__dataP__164F3FA9">
+    <default id="4141" parent="4078" name="DF__Historico__dataP__164F3FA9">
       <ColNames>dataPagamento</ColNames>
       <DefaultExpression>getdate()</DefaultExpression>
       <ModifiedTimestamp>2025-12-10.02:33:10.167</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>374292393</ObjectId>
     </default>
-    <foreign-key id="4140" parent="4077" name="FK__Historico__trans__174363E2">
+    <foreign-key id="4142" parent="4078" name="FK__Historico__trans__174363E2">
       <ColNames>transacao_id</ColNames>
       <CreatedTimestamp>2025-12-10.02:33:10.167</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.167</ModifiedTimestamp>
@@ -12790,7 +12802,7 @@ int</ExtendedProperties>
       <RefTableId>262291994</RefTableId>
       <RefTableName>Transacao</RefTableName>
     </foreign-key>
-    <index id="4141" parent="4077" name="PK__Historic__419DBA7321F72ACC">
+    <index id="4143" parent="4078" name="PK__Historic__419DBA7321F72ACC">
       <Clustering>1</Clustering>
       <ColNames>transacao_id
 numRegisto</ColNames>
@@ -12799,7 +12811,7 @@ numRegisto</ColNames>
       <Unique>1</Unique>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <key id="4142" parent="4077" name="PK__Historic__419DBA7321F72ACC">
+    <key id="4144" parent="4078" name="PK__Historic__419DBA7321F72ACC">
       <CreatedTimestamp>2025-12-10.02:33:10.167</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.167</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
@@ -12807,82 +12819,82 @@ numRegisto</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PK__Historic__419DBA7321F72ACC</UnderlyingIndexName>
     </key>
-    <column id="4143" parent="4078" name="id">
+    <column id="4145" parent="4079" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>1(5)</SequenceIdentity>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4144" parent="4078" name="nome">
+    <column id="4146" parent="4079" name="nome">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>nvarchar(100 char)|0s</StoredType>
     </column>
-    <column id="4145" parent="4078" name="cc">
+    <column id="4147" parent="4079" name="cc">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>nvarchar(20 char)|0s</StoredType>
     </column>
-    <column id="4146" parent="4078" name="dataRegisto">
+    <column id="4148" parent="4079" name="dataRegisto">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="4147" parent="4078" name="dataNascimento">
+    <column id="4149" parent="4079" name="dataNascimento">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="4148" parent="4078" name="estadoVerificacao">
+    <column id="4150" parent="4079" name="estadoVerificacao">
       <Position>6</Position>
       <StoredType>bit|0s</StoredType>
       <DefaultConstraintId>150291595</DefaultConstraintId>
       <DefaultConstraintName>DF__Jogador__estadoV__08F5448B</DefaultConstraintName>
     </column>
-    <column id="4149" parent="4078" name="email">
+    <column id="4151" parent="4079" name="email">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>nvarchar(100 char)|0s</StoredType>
     </column>
-    <column id="4150" parent="4078" name="saldo">
+    <column id="4152" parent="4079" name="saldo">
       <Position>8</Position>
       <StoredType>decimal(10,2)|0s</StoredType>
       <DefaultConstraintId>166291652</DefaultConstraintId>
       <DefaultConstraintName>DF__Jogador__saldo__09E968C4</DefaultConstraintName>
     </column>
-    <column id="4151" parent="4078" name="password">
+    <column id="4153" parent="4079" name="password">
       <NotNull>1</NotNull>
       <Position>9</Position>
       <StoredType>nvarchar(255 char)|0s</StoredType>
     </column>
-    <column id="4152" parent="4078" name="isAdmin">
+    <column id="4154" parent="4079" name="isAdmin">
       <Position>10</Position>
       <StoredType>bit|0s</StoredType>
       <DefaultConstraintId>1398296041</DefaultConstraintId>
       <DefaultConstraintName>DF__Jogador__isAdmin__53584DE9</DefaultConstraintName>
     </column>
-    <default id="4153" parent="4078" name="DF__Jogador__estadoV__08F5448B">
+    <default id="4155" parent="4079" name="DF__Jogador__estadoV__08F5448B">
       <ColNames>estadoVerificacao</ColNames>
       <DefaultExpression>0</DefaultExpression>
       <ModifiedTimestamp>2025-12-10.02:33:09.903</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>150291595</ObjectId>
     </default>
-    <default id="4154" parent="4078" name="DF__Jogador__saldo__09E968C4">
+    <default id="4156" parent="4079" name="DF__Jogador__saldo__09E968C4">
       <ColNames>saldo</ColNames>
       <DefaultExpression>0.00</DefaultExpression>
       <ModifiedTimestamp>2025-12-10.02:33:09.903</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>166291652</ObjectId>
     </default>
-    <default id="4155" parent="4078" name="DF__Jogador__isAdmin__53584DE9">
+    <default id="4157" parent="4079" name="DF__Jogador__isAdmin__53584DE9">
       <ColNames>isAdmin</ColNames>
       <DefaultExpression>0</DefaultExpression>
       <ModifiedTimestamp>2025-12-11.03:36:56.263</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>1398296041</ObjectId>
     </default>
-    <index id="4156" parent="4078" name="PK__Jogador__3213E83FBCCF6665">
+    <index id="4158" parent="4079" name="PK__Jogador__3213E83FBCCF6665">
       <Clustering>1</Clustering>
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -12890,26 +12902,26 @@ numRegisto</ColNames>
       <Unique>1</Unique>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <index id="4157" parent="4078" name="UQ__Jogador__AB6E61646BA78FF3">
+    <index id="4159" parent="4079" name="UQ__Jogador__AB6E61646BA78FF3">
       <ColNames>email</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Position>2</Position>
       <Unique>1</Unique>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <index id="4158" parent="4078" name="UQ__Jogador__3213666C5862B92B">
+    <index id="4160" parent="4079" name="UQ__Jogador__3213666C5862B92B">
       <ColNames>cc</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Position>3</Position>
       <Unique>1</Unique>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <index id="4159" parent="4078" name="idx_Jogador_Email">
+    <index id="4161" parent="4079" name="idx_Jogador_Email">
       <ColNames>email</ColNames>
       <Position>4</Position>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <key id="4160" parent="4078" name="PK__Jogador__3213E83FBCCF6665">
+    <key id="4162" parent="4079" name="PK__Jogador__3213E83FBCCF6665">
       <CreatedTimestamp>2025-12-10.02:33:09.827</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:09.827</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
@@ -12917,21 +12929,21 @@ numRegisto</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PK__Jogador__3213E83FBCCF6665</UnderlyingIndexName>
     </key>
-    <key id="4161" parent="4078" name="UQ__Jogador__3213666C5862B92B">
+    <key id="4163" parent="4079" name="UQ__Jogador__3213666C5862B92B">
       <CreatedTimestamp>2025-12-10.02:33:09.903</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:09.903</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>134291538</ObjectId>
       <UnderlyingIndexName>UQ__Jogador__3213666C5862B92B</UnderlyingIndexName>
     </key>
-    <key id="4162" parent="4078" name="UQ__Jogador__AB6E61646BA78FF3">
+    <key id="4164" parent="4079" name="UQ__Jogador__AB6E61646BA78FF3">
       <CreatedTimestamp>2025-12-10.02:33:09.830</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:09.830</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>118291481</ObjectId>
       <UnderlyingIndexName>UQ__Jogador__AB6E61646BA78FF3</UnderlyingIndexName>
     </key>
-    <trigger id="4163" parent="4078" name="trg_SegurancaSaldo">
+    <trigger id="4165" parent="4079" name="trg_SegurancaSaldo">
       <CreatedTimestamp>2025-12-10.02:44:58.250</CreatedTimestamp>
       <Events>U</Events>
       <ModifiedTimestamp>2025-12-10.02:44:58.250</ModifiedTimestamp>
@@ -12939,22 +12951,22 @@ numRegisto</ColNames>
       <SourceTextLength>406</SourceTextLength>
       <Turn>after-stmt</Turn>
     </trigger>
-    <column id="4164" parent="4079" name="id">
+    <column id="4166" parent="4080" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>1(3)</SequenceIdentity>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4165" parent="4079" name="nome">
+    <column id="4167" parent="4080" name="nome">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>nvarchar(50 char)|0s</StoredType>
     </column>
-    <column id="4166" parent="4079" name="descricao">
+    <column id="4168" parent="4080" name="descricao">
       <Position>3</Position>
       <StoredType>nvarchar(max)|0s</StoredType>
     </column>
-    <index id="4167" parent="4079" name="PK__Jogo__3213E83F5BD00A0A">
+    <index id="4169" parent="4080" name="PK__Jogo__3213E83F5BD00A0A">
       <Clustering>1</Clustering>
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -12962,7 +12974,7 @@ numRegisto</ColNames>
       <Unique>1</Unique>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <key id="4168" parent="4079" name="PK__Jogo__3213E83F5BD00A0A">
+    <key id="4170" parent="4080" name="PK__Jogo__3213E83F5BD00A0A">
       <CreatedTimestamp>2025-12-10.02:33:10.193</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.193</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
@@ -12970,30 +12982,30 @@ numRegisto</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PK__Jogo__3213E83F5BD00A0A</UnderlyingIndexName>
     </key>
-    <column id="4169" parent="4080" name="id">
+    <column id="4171" parent="4081" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>1(4)</SequenceIdentity>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4170" parent="4080" name="jogo_id">
+    <column id="4172" parent="4081" name="jogo_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4171" parent="4080" name="dealer_id">
+    <column id="4173" parent="4081" name="dealer_id">
       <Position>3</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4172" parent="4080" name="apostaMax">
+    <column id="4174" parent="4081" name="apostaMax">
       <Position>4</Position>
       <StoredType>decimal(10,2)|0s</StoredType>
     </column>
-    <column id="4173" parent="4080" name="apostaMin">
+    <column id="4175" parent="4081" name="apostaMin">
       <Position>5</Position>
       <StoredType>decimal(10,2)|0s</StoredType>
     </column>
-    <foreign-key id="4174" parent="4080" name="FK__Mesa__jogo_id__1DF06171">
+    <foreign-key id="4176" parent="4081" name="FK__Mesa__jogo_id__1DF06171">
       <ColNames>jogo_id</ColNames>
       <CreatedTimestamp>2025-12-10.02:33:10.273</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.273</ModifiedTimestamp>
@@ -13004,7 +13016,7 @@ numRegisto</ColNames>
       <RefTableId>406292507</RefTableId>
       <RefTableName>Jogo</RefTableName>
     </foreign-key>
-    <foreign-key id="4175" parent="4080" name="FK__Mesa__dealer_id__1EE485AA">
+    <foreign-key id="4177" parent="4081" name="FK__Mesa__dealer_id__1EE485AA">
       <ColNames>dealer_id</ColNames>
       <CreatedTimestamp>2025-12-10.02:33:10.273</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.273</ModifiedTimestamp>
@@ -13015,7 +13027,7 @@ numRegisto</ColNames>
       <RefTableId>438292621</RefTableId>
       <RefTableName>Dealer</RefTableName>
     </foreign-key>
-    <index id="4176" parent="4080" name="PK__Mesa__3213E83FD84308AC">
+    <index id="4178" parent="4081" name="PK__Mesa__3213E83FD84308AC">
       <Clustering>1</Clustering>
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -13023,7 +13035,7 @@ numRegisto</ColNames>
       <Unique>1</Unique>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <key id="4177" parent="4080" name="PK__Mesa__3213E83FD84308AC">
+    <key id="4179" parent="4081" name="PK__Mesa__3213E83FD84308AC">
       <CreatedTimestamp>2025-12-10.02:33:10.273</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.273</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
@@ -13031,49 +13043,49 @@ numRegisto</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PK__Mesa__3213E83FD84308AC</UnderlyingIndexName>
     </key>
-    <column id="4178" parent="4081" name="id">
+    <column id="4180" parent="4082" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>1(23)</SequenceIdentity>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4179" parent="4081" name="jogador_id">
+    <column id="4181" parent="4082" name="jogador_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4180" parent="4081" name="enderecoIp">
+    <column id="4182" parent="4082" name="enderecoIp">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>nvarchar(45 char)|0s</StoredType>
     </column>
-    <column id="4181" parent="4081" name="dataLogin">
+    <column id="4183" parent="4082" name="dataLogin">
       <Position>4</Position>
       <StoredType>datetime|0s</StoredType>
       <DefaultConstraintId>214291823</DefaultConstraintId>
       <DefaultConstraintName>DF__RegistoLo__dataL__0CC5D56F</DefaultConstraintName>
     </column>
-    <column id="4182" parent="4081" name="sucesso">
+    <column id="4184" parent="4082" name="sucesso">
       <Position>5</Position>
       <StoredType>bit|0s</StoredType>
       <DefaultConstraintId>230291880</DefaultConstraintId>
       <DefaultConstraintName>DF__RegistoLo__suces__0DB9F9A8</DefaultConstraintName>
     </column>
-    <default id="4183" parent="4081" name="DF__RegistoLo__dataL__0CC5D56F">
+    <default id="4185" parent="4082" name="DF__RegistoLo__dataL__0CC5D56F">
       <ColNames>dataLogin</ColNames>
       <DefaultExpression>getdate()</DefaultExpression>
       <ModifiedTimestamp>2025-12-10.02:33:10</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>214291823</ObjectId>
     </default>
-    <default id="4184" parent="4081" name="DF__RegistoLo__suces__0DB9F9A8">
+    <default id="4186" parent="4082" name="DF__RegistoLo__suces__0DB9F9A8">
       <ColNames>sucesso</ColNames>
       <DefaultExpression>1</DefaultExpression>
       <ModifiedTimestamp>2025-12-10.02:33:10</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>230291880</ObjectId>
     </default>
-    <foreign-key id="4185" parent="4081" name="FK__RegistoLo__jogad__0EAE1DE1">
+    <foreign-key id="4187" parent="4082" name="FK__RegistoLo__jogad__0EAE1DE1">
       <ColNames>jogador_id</ColNames>
       <CreatedTimestamp>2025-12-10.02:33:10.003</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.003</ModifiedTimestamp>
@@ -13084,7 +13096,7 @@ numRegisto</ColNames>
       <RefTableId>86291367</RefTableId>
       <RefTableName>Jogador</RefTableName>
     </foreign-key>
-    <index id="4186" parent="4081" name="PK__RegistoL__3213E83F077B689C">
+    <index id="4188" parent="4082" name="PK__RegistoL__3213E83F077B689C">
       <Clustering>1</Clustering>
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -13092,7 +13104,7 @@ numRegisto</ColNames>
       <Unique>1</Unique>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <key id="4187" parent="4081" name="PK__RegistoL__3213E83F077B689C">
+    <key id="4189" parent="4082" name="PK__RegistoL__3213E83F077B689C">
       <CreatedTimestamp>2025-12-10.02:33:10</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
@@ -13100,53 +13112,53 @@ numRegisto</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PK__RegistoL__3213E83F077B689C</UnderlyingIndexName>
     </key>
-    <column id="4188" parent="4082" name="id">
+    <column id="4190" parent="4083" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>1(25)</SequenceIdentity>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4189" parent="4082" name="mesa_id">
+    <column id="4191" parent="4083" name="mesa_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4190" parent="4082" name="jogador_id">
+    <column id="4192" parent="4083" name="jogador_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4191" parent="4082" name="numPartidas">
+    <column id="4193" parent="4083" name="numPartidas">
       <Position>4</Position>
       <StoredType>int|0s</StoredType>
       <DefaultConstraintId>566293077</DefaultConstraintId>
       <DefaultConstraintName>DF__SessaoDeJ__numPa__21C0F255</DefaultConstraintName>
     </column>
-    <column id="4192" parent="4082" name="dataInicio">
+    <column id="4194" parent="4083" name="dataInicio">
       <Position>5</Position>
       <StoredType>datetime|0s</StoredType>
       <DefaultConstraintId>582293134</DefaultConstraintId>
       <DefaultConstraintName>DF__SessaoDeJ__dataI__22B5168E</DefaultConstraintName>
     </column>
-    <column id="4193" parent="4082" name="dataFim">
+    <column id="4195" parent="4083" name="dataFim">
       <Position>6</Position>
       <StoredType>datetime|0s</StoredType>
     </column>
-    <default id="4194" parent="4082" name="DF__SessaoDeJ__numPa__21C0F255">
+    <default id="4196" parent="4083" name="DF__SessaoDeJ__numPa__21C0F255">
       <ColNames>numPartidas</ColNames>
       <DefaultExpression>0</DefaultExpression>
       <ModifiedTimestamp>2025-12-10.02:33:10.310</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>566293077</ObjectId>
     </default>
-    <default id="4195" parent="4082" name="DF__SessaoDeJ__dataI__22B5168E">
+    <default id="4197" parent="4083" name="DF__SessaoDeJ__dataI__22B5168E">
       <ColNames>dataInicio</ColNames>
       <DefaultExpression>getdate()</DefaultExpression>
       <ModifiedTimestamp>2025-12-10.02:33:10.310</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>582293134</ObjectId>
     </default>
-    <foreign-key id="4196" parent="4082" name="FK__SessaoDeJ__mesa___23A93AC7">
+    <foreign-key id="4198" parent="4083" name="FK__SessaoDeJ__mesa___23A93AC7">
       <ColNames>mesa_id</ColNames>
       <CreatedTimestamp>2025-12-10.02:33:10.310</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.310</ModifiedTimestamp>
@@ -13157,7 +13169,7 @@ numRegisto</ColNames>
       <RefTableId>470292735</RefTableId>
       <RefTableName>Mesa</RefTableName>
     </foreign-key>
-    <foreign-key id="4197" parent="4082" name="FK__SessaoDeJ__jogad__249D5F00">
+    <foreign-key id="4199" parent="4083" name="FK__SessaoDeJ__jogad__249D5F00">
       <ColNames>jogador_id</ColNames>
       <CreatedTimestamp>2025-12-10.02:33:10.310</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.310</ModifiedTimestamp>
@@ -13168,7 +13180,7 @@ numRegisto</ColNames>
       <RefTableId>86291367</RefTableId>
       <RefTableName>Jogador</RefTableName>
     </foreign-key>
-    <index id="4198" parent="4082" name="PK__SessaoDe__3213E83F3A8E5F50">
+    <index id="4200" parent="4083" name="PK__SessaoDe__3213E83F3A8E5F50">
       <Clustering>1</Clustering>
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -13176,12 +13188,12 @@ numRegisto</ColNames>
       <Unique>1</Unique>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <index id="4199" parent="4082" name="idx_Sessao_Jogador">
+    <index id="4201" parent="4083" name="idx_Sessao_Jogador">
       <ColNames>jogador_id</ColNames>
       <Position>3</Position>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <key id="4200" parent="4082" name="PK__SessaoDe__3213E83F3A8E5F50">
+    <key id="4202" parent="4083" name="PK__SessaoDe__3213E83F3A8E5F50">
       <CreatedTimestamp>2025-12-10.02:33:10.307</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.307</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
@@ -13189,54 +13201,54 @@ numRegisto</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>PK__SessaoDe__3213E83F3A8E5F50</UnderlyingIndexName>
     </key>
-    <column id="4201" parent="4083" name="id">
+    <column id="4203" parent="4084" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>1(4)</SequenceIdentity>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4202" parent="4083" name="jogador_id">
+    <column id="4204" parent="4084" name="jogador_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="4203" parent="4083" name="valor">
+    <column id="4205" parent="4084" name="valor">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>decimal(10,2)|0s</StoredType>
     </column>
-    <column id="4204" parent="4083" name="tipoDeTransacao">
+    <column id="4206" parent="4084" name="tipoDeTransacao">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>nvarchar(50 char)|0s</StoredType>
     </column>
-    <column id="4205" parent="4083" name="sucesso">
+    <column id="4207" parent="4084" name="sucesso">
       <Position>5</Position>
       <StoredType>bit|0s</StoredType>
       <DefaultConstraintId>294292108</DefaultConstraintId>
       <DefaultConstraintName>DF__Transacao__suces__118A8A8C</DefaultConstraintName>
     </column>
-    <column id="4206" parent="4083" name="data">
+    <column id="4208" parent="4084" name="data">
       <Position>6</Position>
       <StoredType>datetime|0s</StoredType>
       <DefaultConstraintId>310292165</DefaultConstraintId>
       <DefaultConstraintName>DF__Transacao__data__127EAEC5</DefaultConstraintName>
     </column>
-    <default id="4207" parent="4083" name="DF__Transacao__suces__118A8A8C">
+    <default id="4209" parent="4084" name="DF__Transacao__suces__118A8A8C">
       <ColNames>sucesso</ColNames>
       <DefaultExpression>1</DefaultExpression>
       <ModifiedTimestamp>2025-12-10.02:33:10.107</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>294292108</ObjectId>
     </default>
-    <default id="4208" parent="4083" name="DF__Transacao__data__127EAEC5">
+    <default id="4210" parent="4084" name="DF__Transacao__data__127EAEC5">
       <ColNames>data</ColNames>
       <DefaultExpression>getdate()</DefaultExpression>
       <ModifiedTimestamp>2025-12-10.02:33:10.107</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>310292165</ObjectId>
     </default>
-    <foreign-key id="4209" parent="4083" name="FK__Transacao__jogad__1372D2FE">
+    <foreign-key id="4211" parent="4084" name="FK__Transacao__jogad__1372D2FE">
       <ColNames>jogador_id</ColNames>
       <CreatedTimestamp>2025-12-10.02:33:10.107</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.107</ModifiedTimestamp>
@@ -13247,7 +13259,7 @@ numRegisto</ColNames>
       <RefTableId>86291367</RefTableId>
       <RefTableName>Jogador</RefTableName>
     </foreign-key>
-    <index id="4210" parent="4083" name="PK__Transaca__3213E83F3C27F15C">
+    <index id="4212" parent="4084" name="PK__Transaca__3213E83F3C27F15C">
       <Clustering>1</Clustering>
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -13255,7 +13267,7 @@ numRegisto</ColNames>
       <Unique>1</Unique>
       <PartitionDataSpaceId>1</PartitionDataSpaceId>
     </index>
-    <key id="4211" parent="4083" name="PK__Transaca__3213E83F3C27F15C">
+    <key id="4213" parent="4084" name="PK__Transaca__3213E83F3C27F15C">
       <CreatedTimestamp>2025-12-10.02:33:10.107</CreatedTimestamp>
       <ModifiedTimestamp>2025-12-10.02:33:10.107</ModifiedTimestamp>
       <NameSurrogate>1</NameSurrogate>

@@ -1,0 +1,12 @@
+INSERT INTO Dealer (nome) VALUES
+('William Carvalho'),
+('Pepe'),
+('Nani'),
+('Adrien Silva'),
+('Pizzi'),
+('Sérgio Oliveira'),
+('Ricardo Quaresma'),
+('Cédric Soares'),
+('Éder'),
+('João Mário');
+GO

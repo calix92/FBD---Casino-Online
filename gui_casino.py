@@ -21,6 +21,7 @@ class CasinoApp(ctk.CTk):
         self.after(0, lambda: self.state('zoomed'))
 
         self.jogador = None
+        self.nome_dealer = "Casa"  # <--- ADICIONA ESTA LINHA AQUI
         self.bg_image = None
         self.bg_label = None
 
@@ -188,6 +189,7 @@ class CasinoApp(ctk.CTk):
     def iniciar_blackjack(self):
         self.mesa_id = db_manager.obter_mesa_id('Blackjack')
         if not self.mesa_id: messagebox.showerror("Erro", "Mesa não encontrada na BD!"); return
+        self.nome_dealer = db_manager.sortear_dealer_mesa(self.mesa_id)
         self.sessao_id = db_manager.iniciar_sessao(self.jogador['id'], self.mesa_id)
         self.show_blackjack_screen()
 
@@ -213,7 +215,12 @@ class CasinoApp(ctk.CTk):
         ctk.CTkButton(self.actions_frame, text="MENU", fg_color="gray", command=self.show_main_menu).pack(side="right",
                                                                                                           padx=20)
 
-        ctk.CTkLabel(bg, text="DEALER", font=("Arial", 24, "bold"), text_color="yellow", fg_color="transparent").pack(
+        # CRIA O TEXTO DINÂMICO
+        texto_dealer = f"DEALER: {self.nome_dealer.upper()}"
+
+        # USA A VARIÁVEL NO LABEL
+        ctk.CTkLabel(bg, text=texto_dealer, font=("Arial", 24, "bold"), text_color="yellow",
+                     fg_color="transparent").pack(
             pady=(80, 10))
         self.dealer_cards_frame = ctk.CTkFrame(bg, fg_color="transparent");
         self.dealer_cards_frame.pack()
@@ -289,6 +296,10 @@ class CasinoApp(ctk.CTk):
     def iniciar_banca(self):
         self.mesa_id = db_manager.obter_mesa_id('Banca Francesa')
         if not self.mesa_id: self.mesa_id = db_manager.obter_mesa_id('Blackjack')
+
+        # --- LINHA NOVA: Sorteia o Dealer para esta mesa também ---
+        self.nome_dealer = db_manager.sortear_dealer_mesa(self.mesa_id)
+
         self.sessao_id = db_manager.iniciar_sessao(self.jogador['id'], self.mesa_id)
         self.show_banca_screen()
 
@@ -297,7 +308,12 @@ class CasinoApp(ctk.CTk):
         bg = self.setup_background();
         self.create_top_bar(self)
         ctk.CTkLabel(bg, text="BANCA FRANCESA", font=("Arial", 30, "bold"), text_color="gold",
-                     fg_color="transparent").pack(pady=(50, 20))
+                     fg_color="transparent").pack(pady=(50, 10))
+
+        texto_dealer = f"DEALER: {self.nome_dealer.upper()}"
+        ctk.CTkLabel(bg, text=texto_dealer, font=("Arial", 20, "bold"), text_color="yellow",
+                     fg_color="transparent").pack(pady=(0, 20))
+
         self.dice_frame = ctk.CTkFrame(bg, fg_color="transparent");
         self.dice_frame.pack(pady=20)
         self.dice_labels = []
