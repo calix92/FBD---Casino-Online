@@ -125,19 +125,20 @@ def depositar_saldo(jogador_id, valor):
 # --- NOVAS FUNÇÕES (ADMIN E HISTÓRICO) ---
 
 def obter_historico_pessoal(jogador_id):
-    """Devolve as últimas 10 jogadas do jogador"""
+    """Devolve as últimas 10 jogadas do jogador com o nome do Dealer"""
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        # JOINs para mostrar o nome do jogo e da aposta
+        # ADICIONADO: LEFT JOIN com Mesa e Dealer, e d.nome na SELECT
         sql = """
-              SELECT TOP 10 jg.nome, a.valor, a.resultado, a.lucro, a.dataAposta
+              SELECT TOP 10 jg.nome, a.valor, a.resultado, a.lucro, a.dataAposta, d.nome AS nome_dealer
               FROM Aposta a
                        JOIN SessaoDeJogo s ON a.sessaoJogo_id = s.id
                        JOIN Mesa m ON s.mesa_id = m.id
                        JOIN Jogo jg ON m.jogo_id = jg.id
+                       LEFT JOIN Dealer d ON m.dealer_id = d.id -- Novo JOIN
               WHERE s.jogador_id = ?
-              ORDER BY a.dataAposta DESC \
+              ORDER BY a.dataAposta DESC
               """
         cursor.execute(sql, (jogador_id,))
         rows = cursor.fetchall()
@@ -161,18 +162,19 @@ def admin_obter_todos_jogadores():
 
 
 def admin_obter_todas_apostas():
-    """ADMIN: Lista as últimas 20 apostas globais"""
+    """ADMIN: Lista as últimas 20 apostas globais com o nome do Dealer"""
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        # MUDANÇA: Buscamos j.id, j.email e renomeamos jg.nome para jogo_nome
+        # ADICIONADO: LEFT JOIN com Mesa e Dealer, e d.nome na SELECT
         sql = """
-            SELECT TOP 20 j.id, j.email, jg.nome AS jogo_nome, a.resultado, a.lucro, a.dataAposta
+            SELECT TOP 20 j.id, j.email, jg.nome AS jogo_nome, a.resultado, a.lucro, a.dataAposta, d.nome AS nome_dealer
             FROM Aposta a
             JOIN SessaoDeJogo s ON a.sessaoJogo_id = s.id
             JOIN Jogador j ON s.jogador_id = j.id
             JOIN Mesa m ON s.mesa_id = m.id
             JOIN Jogo jg ON m.jogo_id = jg.id
+            LEFT JOIN Dealer d ON m.dealer_id = d.id -- Novo JOIN
             ORDER BY a.dataAposta DESC
         """
         cursor.execute(sql)

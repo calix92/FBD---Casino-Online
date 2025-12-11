@@ -412,31 +412,32 @@ class CasinoApp(ctk.CTk):
         tabview.add("Jogos")  # Aba 1: Apostas
         tabview.add("Transações")  # Aba 2: Depósitos e Levantamentos
 
-        # ================= ABA 1: HISTÓRICO DE JOGOS =================
+        # ================= ABA 1: HISTÓRICO DE JOGOS (COM DEALER) =================
         scroll_jogos = ctk.CTkScrollableFrame(tabview.tab("Jogos"), width=750, height=400)
         scroll_jogos.pack(fill="both", expand=True)
 
         historico_jogos = db_manager.obter_historico_pessoal(self.jogador['id'])
 
-        # Cabeçalho Jogos
-        header_jogos = f"{'JOGO':<15} | {'APOSTA':<10} | {'RES':<10} | {'LUCRO':<10} | {'DATA'}"
-        ctk.CTkLabel(scroll_jogos, text=header_jogos, font=("Consolas", 14, "bold"), anchor="w").pack(fill="x", padx=10)
-        ctk.CTkLabel(scroll_jogos, text="-" * 90).pack()
+        # Cabeçalho Jogos: ADICIONADO DEALER
+        header_jogos = f"{'JOGO':<10} | {'DEALER':<20} | {'APOSTA':<8} | {'RES':<8} | {'LUCRO':<8} | {'DATA'}"
+        ctk.CTkLabel(scroll_jogos, text=header_jogos, font=("Consolas", 12, "bold"), anchor="w").pack(fill="x", padx=10)
+        ctk.CTkLabel(scroll_jogos, text="-" * 105).pack()
 
         if not historico_jogos:
             ctk.CTkLabel(scroll_jogos, text="Sem registo de jogos.", text_color="gray").pack(pady=20)
 
         for row in historico_jogos:
-            data_fmt = row.dataAposta.strftime('%Y-%m-%d %H:%M')
-            txt = f"{row.nome:<15} | {row.valor:>8.2f}€ | {row.resultado:<10} | {row.lucro:>+8.2f}€ | {data_fmt}"
+            data_fmt = row.dataAposta.strftime('%d/%m %H:%M')
+            # Nova formatação para incluir o nome do dealer (row.nome_dealer)
+            txt = f"{row.nome:<10} | {row.nome_dealer:<20} | {row.valor:>6.2f}€ | {row.resultado:<8} | {row.lucro:>+6.2f}€ | {data_fmt}"
 
             # Cor: Verde (lucro), Vermelho (prejuízo), Branco (neutro)
             col = "#00FF00" if row.lucro > 0 else ("red" if row.lucro < 0 else "white")
 
-            ctk.CTkLabel(scroll_jogos, text=txt, font=("Consolas", 12), text_color=col, anchor="w").pack(fill="x",
+            ctk.CTkLabel(scroll_jogos, text=txt, font=("Consolas", 10), text_color=col, anchor="w").pack(fill="x",
                                                                                                          padx=10)
 
-        # ================= ABA 2: HISTÓRICO DE TRANSAÇÕES =================
+        # ================= ABA 2: HISTÓRICO DE TRANSAÇÕES (MANTIDO) =================
         scroll_trans = ctk.CTkScrollableFrame(tabview.tab("Transações"), width=750, height=400)
         scroll_trans.pack(fill="both", expand=True)
 
@@ -457,15 +458,13 @@ class CasinoApp(ctk.CTk):
             # Cor: Verde para depósitos, Laranja/Vermelho para levantamentos
             if "Deposito" in t.tipoDeTransacao:
                 col = "#4CAF50"  # Verde
-                sinal = "+"
             else:
                 col = "#FF9800"  # Laranja
-                sinal = "-"
 
             ctk.CTkLabel(scroll_trans, text=txt, font=("Consolas", 12), text_color=col, anchor="w").pack(fill="x",
                                                                                                          padx=10)
 
-        # Botão de Voltar (Fora das abas)
+        # Botão de Voltar
         ctk.CTkButton(frame, text="Voltar", fg_color="gray", command=self.show_main_menu).pack(pady=20)
 
     def show_admin_panel(self):
@@ -486,7 +485,7 @@ class CasinoApp(ctk.CTk):
         tabview.add("Apostas Globais")
         tabview.add("Transações Globais")
 
-        # ================= ABA 1: JOGADORES =================
+        # ================= ABA 1: JOGADORES (MANTIDO) =================
         scroll_jog = ctk.CTkScrollableFrame(tabview.tab("Jogadores"), width=800, height=400)
         scroll_jog.pack(fill="both", expand=True)
 
@@ -500,23 +499,27 @@ class CasinoApp(ctk.CTk):
             txt = f"{j.id:<5} {j.nome:<20} {j.email:<30} {j.saldo:>8.2f}€"
             ctk.CTkLabel(scroll_jog, text=txt, font=("Consolas", 12), anchor="w").pack(fill="x")
 
-        # ================= ABA 2: APOSTAS GLOBAIS =================
+        # ================= ABA 2: APOSTAS GLOBAIS (COM DEALER) =================
         scroll_bet = ctk.CTkScrollableFrame(tabview.tab("Apostas Globais"), width=800, height=400)
         scroll_bet.pack(fill="both", expand=True)
 
         apostas = db_manager.admin_obter_todas_apostas()
 
-        header_bet = f"{'ID':<5} {'EMAIL':<30} {'JOGO':<15} {'RES':<10} {'LUCRO':<10} {'DATA'}"
+        # Cabeçalho Apostas Globais: ADICIONADO DEALER
+        # ID(5) | EMAIL(25) | JOGO(10) | DEALER(15) | RES(8) | LUCRO(8) | DATA
+        header_bet = f"{'ID':<5} {'EMAIL':<25} {'JOGO':<10} {'DEALER':<15} {'RES':<8} {'LUCRO':<8} {'DATA'}"
         ctk.CTkLabel(scroll_bet, text=header_bet, font=("Consolas", 12, "bold"), anchor="w").pack(fill="x")
-        ctk.CTkLabel(scroll_bet, text="-" * 100).pack()
+        ctk.CTkLabel(scroll_bet, text="-" * 105).pack()
 
         for a in apostas:
             dt = a.dataAposta.strftime('%d/%m %H:%M')
-            txt = f"{a.id:<5} {a.email:<30} {a.jogo_nome:<15} {a.resultado:<10} {a.lucro:>+8.2f}€ {dt}"
-            col = "green" if a.lucro > 0 else "red"
-            ctk.CTkLabel(scroll_bet, text=txt, font=("Consolas", 12), text_color=col, anchor="w").pack(fill="x")
+            # Nova formatação para incluir o nome do dealer (a.nome_dealer)
+            txt = f"{a.id:<5} {a.email:<25} {a.jogo_nome:<10} {a.nome_dealer:<15} {a.resultado:<8} {a.lucro:>+6.2f}€ {dt}"
 
-        # ================= ABA 3: TRANSAÇÕES GLOBAIS (CORRIGIDA) =================
+            col = "green" if a.lucro > 0 else "red"
+            ctk.CTkLabel(scroll_bet, text=txt, font=("Consolas", 10), text_color=col, anchor="w").pack(fill="x")
+
+        # ================= ABA 3: TRANSAÇÕES GLOBAIS (MANTIDO) =================
         scroll_trans = ctk.CTkScrollableFrame(tabview.tab("Transações Globais"), width=800, height=400)
         scroll_trans.pack(fill="both", expand=True)
 
@@ -532,7 +535,6 @@ class CasinoApp(ctk.CTk):
 
             # Combina ID do Jogador e Email numa só coluna
             user_info = f"{t.jogador_id} - {t.email}"
-            # Se o email for muito comprido, cortamos para não partir a tabela
             if len(user_info) > 38: user_info = user_info[:35] + "..."
 
             # Formatação da linha sem o ID da transação

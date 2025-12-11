@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d64ea730-416e-47d2-bed5-03aef5891790" name="Changes" comment="billie jean, billie jean">
-      <change afterPath="$PROJECT_DIR$/08_add_dealers.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bbb0c64d-9952-482e-858b-291efc7e154a.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/bbb0c64d-9952-482e-858b-291efc7e154a.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bbb0c64d-9952-482e-858b-291efc7e154a/storage_v2/_src_/database/p3g4.sLUzAA/schema/dbo.sYMBAA.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/bbb0c64d-9952-482e-858b-291efc7e154a/storage_v2/_src_/database/p3g4.sLUzAA/schema/dbo.sYMBAA.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/03_sp.sql" beforeDir="false" afterPath="$PROJECT_DIR$/03_sp.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/db_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e depois.txt" beforeDir="false" afterPath="$PROJECT_DIR$/e depois.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui_casino.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui_casino.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -178,7 +173,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765430644544</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="billie jean, billie jean">
+      <option name="closed" value="true" />
+      <created>1765432774838</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1765432774838</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,6 +197,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/FBD___Casino_Online$main.coverage" NAME="main Coverage Results" MODIFIED="1765335520740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/FBD___Casino_Online$gui_casino.coverage" NAME="gui_casino Coverage Results" MODIFIED="1765432666133" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/FBD___Casino_Online$gui_casino.coverage" NAME="gui_casino Coverage Results" MODIFIED="1765434020238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
